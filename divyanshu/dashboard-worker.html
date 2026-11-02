@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Worker Dashboard – NAKKO</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <style>
+    .dash-header {
+      background: rgba(249,249,246,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+    }
+
+    .availability-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 1rem;
+      background: var(--color-paper);
+      border: 1.5px solid var(--color-stone);
+      border-radius: var(--radius-full);
+    }
+    .availability-label { font-size: 0.875rem; font-weight: 600; }
+
+    /* ---- Job Request Card ---- */
+    .job-request {
+      background: var(--color-paper);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: all var(--transition-base);
+      position: relative;
+      overflow: hidden;
+    }
+    .job-request::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--color-accent);
+      border-radius: 4px 0 0 4px;
+    }
+    .job-request:hover { box-shadow: var(--shadow-md); border-color: var(--color-accent); }
+    .job-request-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.875rem; }
+    .job-request-service { font-weight: 700; font-size: 1rem; }
+    .job-request-urgency { font-size: 0.8125rem; color: var(--color-muted); margin-top: 0.125rem; }
+    .job-request-details { display: flex; flex-wrap: wrap; gap: 0.875rem; margin-bottom: 1.25rem; }
+    .job-detail { display: flex; align-items: center; gap: 0.375rem; font-size: 0.8125rem; color: var(--color-muted); }
+    .job-request-actions { display: flex; gap: 0.75rem; }
+
+    /* ---- Earnings Chart (fake visual) ---- */
+    .earnings-chart {
+      background: var(--color-paper);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5rem;
+      height: 100px;
+      margin-top: 1rem;
+    }
+    .chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.375rem; }
+    .chart-bar {
+      width: 100%;
+      border-radius: 4px 4px 0 0;
+      background: var(--color-accent-light);
+      transition: all var(--transition-base);
+      cursor: pointer;
+    }
+    .chart-bar:hover { background: var(--color-accent); }
+    .chart-bar.today { background: var(--color-accent); }
+    .chart-label { font-size: 0.625rem; color: var(--color-muted); text-align: center; }
+
+    /* ---- Skill Badge ---- */
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-tag {
+      padding: 0.25rem 0.75rem;
+      background: var(--color-accent-muted);
+      color: var(--color-accent);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* ---- Rating Stars ---- */
+    .rating-stars { color: #f59e0b; font-size: 1rem; letter-spacing: 2px; }
+
+    /* ---- Performance Card ---- */
+    .perf-card {
+      background: var(--color-paper);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .perf-card-val {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--color-foreground);
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="dash-header">
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="nav-logo" style="font-size:1.125rem;">
+        <div class="nav-logo-icon" style="width:28px;height:28px;font-size:0.75rem;">N</div>
+        NAKKO
+      </a>
+      <span class="badge badge-green">Worker</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="availability-toggle">
+        <label class="toggle" id="availToggle">
+          <input type="checkbox" checked onchange="toggleAvailability(this)" />
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="availability-label" id="availLabel">🟢 Available</span>
+      </div>
+      <button class="btn-icon btn" onclick="showToast('2 new job requests!')">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+      <div class="flex items-center gap-2" style="cursor:pointer;" onclick="showSection('profile')">
+        <div class="avatar-placeholder avatar-sm" style="background:var(--color-worker-bg); color:var(--color-worker); font-size:0.875rem; font-weight:700;">R</div>
+        <span class="type-body-sm font-medium">Ramesh</span>
+      </div>
+      <a href="login.html" class="btn btn-secondary btn-sm">Sign out</a>
+    </div>
+  </header>
+
+  <!-- ===== LAYOUT ===== -->
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Main</div>
+        <div class="sidebar-item active" onclick="showSection('home')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Dashboard
+        </div>
+        <div class="sidebar-item" onclick="showSection('jobs')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          Job Requests
+          <span class="badge badge-green" style="margin-left:auto;padding:0.125rem 0.5rem;font-size:0.6875rem;">2</span>
+        </div>
+        <div class="sidebar-item" onclick="showSection('active')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Active Job
+        </div>
+        <div class="sidebar-item" onclick="showSection('earnings')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Earnings
+        </div>
+        <div class="sidebar-item" onclick="showSection('history')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Job History
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Account</div>
+        <div class="sidebar-item" onclick="showSection('profile')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          My Profile
+        </div>
+        <div class="sidebar-item" onclick="showSection('ratings')">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Ratings
+        </div>
+      </div>
+
+      <div style="margin-top:auto; padding-top:1rem; border-top:1px solid var(--color-border);">
+        <div class="sidebar-item" onclick="window.location.href='login.html'">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sign out
+        </div>
+      </div>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="dashboard-content">
+
+      <!-- ===== HOME ===== -->
+      <div id="section-home">
+        <div class="dash-greeting animate-fade-up">
+          <div class="type-body-sm text-muted mb-1" id="greetingTime2">Good morning</div>
+          <h1 style="font-family:var(--font-display); font-size:1.875rem;">Welcome back, Ramesh 👋</h1>
+        </div>
+
+        <!-- Stats -->
+        <div class="quick-stats animate-fade-up delay-1" style="grid-template-columns:repeat(4,1fr);">
+          <div class="quick-stat-card">
+            <div class="quick-stat-icon" style="background:var(--color-worker-bg);">💰</div>
+            <div class="quick-stat-info">
+              <div class="quick-stat-val">₹1,240</div>
+              <div class="quick-stat-label">Today's earnings</div>
+            </div>
+          </div>
+          <div class="quick-stat-card">
+            <div class="quick-stat-icon" style="background:#fde8dc;">📋</div>
+            <div class="quick-stat-info">
+              <div class="quick-stat-val">3</div>
+              <div class="quick-stat-label">Jobs today</div>
+            </div>
+          </div>
+          <div class="quick-stat-card">
+            <div class="quick-stat-icon" style="background:var(--color-user-bg);">⭐</div>
+            <div class="quick-stat-info">
+              <div class="quick-stat-val">4.9</div>
+              <div class="quick-stat-label">Rating</div>
+            </div>
+          </div>
+          <div class="quick-stat-card">
+            <div class="quick-stat-icon" style="background:#ede9fe;">📊</div>
+            <div class="quick-stat-info">
+              <div class="quick-stat-val">98%</div>
+              <div class="quick-stat-label">Completion rate</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekly Earnings Chart -->
+        <div class="earnings-chart animate-fade-up delay-2">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="type-label">Weekly earnings</p>
+              <p style="font-family:var(--font-display); font-size:1.75rem; margin-top:0.25rem;">₹8,640</p>
+            </div>
+            <span class="badge badge-green">↑ 14% vs last week</span>
+          </div>
+          <div class="chart-bars">
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" style="height:55px;" title="₹5,200"></div>
+              <div class="chart-label">Mon</div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" style="height:70px;" title="₹6,800"></div>
+              <div class="chart-label">Tue</div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" style="height:45px;" title="₹4,300"></div>
+              <div class="chart-label">Wed</div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" style="height:80px;" title="₹7,600"></div>
+              <div class="chart-label">Thu</div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" style="height:65px;" title="₹6,200"></div>
+              <div class="chart-label">Fri</div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar" style="height:90px;" title="₹8,640"></div>
+              <div class="chart-label">Sat</div>
+            </div>
+            <div class="chart-bar-wrap today">
+              <div class="chart-bar today" style="height:52px;" title="₹4,940 so far"></div>
+              <div class="chart-label" style="color:var(--color-accent);">Sun</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- New Job Requests -->
+        <div class="section-header animate-fade-up">
+          <h2 class="section-header-title">New job requests</h2>
+          <a href="#" class="type-body-sm text-muted" onclick="showSection('jobs'); return false;">View all →</a>
+        </div>
+
+        <div class="job-request animate-fade-up delay-1">
+          <div class="job-request-header">
+            <div>
+              <div class="job-request-service">🔧 Pipe leak repair — Kitchen</div>
+              <div class="job-request-urgency">Posted 5 minutes ago · Urgent</div>
+            </div>
+            <span class="badge badge-orange">Urgent</span>
+          </div>
+          <div class="job-request-details">
+            <div class="job-detail">📍 Sector 12, Noida (2.4 km)</div>
+            <div class="job-detail">⏰ ASAP</div>
+            <div class="job-detail">💰 ₹400 – ₹600</div>
+            <div class="job-detail">⏱ ~2 hrs</div>
+          </div>
+          <div class="job-request-actions">
+            <button class="btn btn-accent flex-1" onclick="acceptJob(this, 'Pipe leak repair')">Accept Job</button>
+            <button class="btn btn-outline" onclick="showToast('Job declined')">Decline</button>
+          </div>
+        </div>
+
+        <div class="job-request animate-fade-up delay-2">
+          <div class="job-request-header">
+            <div>
+              <div class="job-request-service">🚿 Bathroom tap replacement</div>
+              <div class="job-request-urgency">Posted 18 minutes ago · Regular</div>
+            </div>
+            <span class="badge badge-muted">Regular</span>
+          </div>
+          <div class="job-request-details">
+            <div class="job-detail">📍 Block 9, Noida (1.1 km)</div>
+            <div class="job-detail">⏰ Today, 3 PM</div>
+            <div class="job-detail">💰 ₹300 – ₹450</div>
+            <div class="job-detail">⏱ ~1.5 hrs</div>
+          </div>
+          <div class="job-request-actions">
+            <button class="btn btn-accent flex-1" onclick="acceptJob(this, 'Tap replacement')">Accept Job</button>
+            <button class="btn btn-outline" onclick="showToast('Job declined')">Decline</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== JOB REQUESTS ===== -->
+      <div id="section-jobs" style="display:none;">
+        <div class="dash-greeting">
+          <h1 style="font-family:var(--font-display); font-size:1.875rem;">Job Requests</h1>
+          <p class="type-body text-muted mt-2">New opportunities in your area</p>
+        </div>
+        <div class="flex items-center gap-3 mb-6">
+          <div class="tabs">
+            <div class="tab-item active" onclick="filterJobs('all', this)">All (4)</div>
+            <div class="tab-item" onclick="filterJobs('urgent', this)">Urgent (1)</div>
+            <div class="tab-item" onclick="filterJobs('nearby', this)">Nearby</div>
+          </div>
+        </div>
+        <div class="job-request">
+          <div class="job-request-header">
+            <div><div class="job-request-service">🔧 Pipe leak — Kitchen</div><div class="job-request-urgency">5 min ago · Urgent</div></div>
+            <span class="badge badge-orange">Urgent</span>
+          </div>
+          <div class="job-request-details">
+            <div class="job-detail">📍 Sector 12, Noida (2.4 km)</div>
+            <div class="job-detail">⏰ ASAP</div>
+            <div class="job-detail">💰 ₹400–₹600</div>
+          </div>
+          <div class="job-request-actions">
+            <button class="btn btn-accent flex-1" onclick="acceptJob(this,'Pipe leak')">Accept</button>
+            <button class="btn btn-outline" onclick="showToast('Declined')">Decline</button>
+          </div>
+        </div>
+        <div class="job-request">
+          <div class="job-request-header">
+            <div><div class="job-request-service">🚿 Tap replacement</div><div class="job-request-urgency">18 min ago</div></div>
+            <span class="badge badge-muted">Regular</span>
+          </div>
+          <div class="job-request-details">
+            <div class="job-detail">📍 Block 9, Noida (1.1 km)</div>
+            <div class="job-detail">⏰ Today 3 PM</div>
+            <div class="job-detail">💰 ₹300–₹450</div>
+          </div>
+          <div class="job-request-actions">
+            <button class="btn btn-accent flex-1" onclick="acceptJob(this,'Tap replacement')">Accept</button>
+            <button class="btn btn-outline" onclick="showToast('Declined')">Decline</button>
+          </div>
+        </div>
+        <div class="job-request">
+          <div class="job-request-header">
+            <div><div class="job-request-service">🔩 Fitting installation</div><div class="job-request-urgency">1 hr ago</div></div>
+            <span class="badge badge-muted">Regular</span>
+          </div>
+          <div class="job-request-details">
+            <div class="job-detail">📍 Sec 18, Noida (4.2 km)</div>
+            <div class="job-detail">⏰ Tomorrow 11 AM</div>
+            <div class="job-detail">💰 ₹250–₹350</div>
+          </div>
+          <div class="job-request-actions">
+            <button class="btn btn-accent flex-1" onclick="acceptJob(this,'Fitting installation')">Accept</button>
+            <button class="btn btn-outline" onclick="showToast('Declined')">Decline</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ACTIVE JOB ===== -->
+      <div id="section-active" style="display:none;">
+        <div class="dash-greeting">
+          <h1 style="font-family:var(--font-display); font-size:1.875rem;">Active Job</h1>
+        </div>
+        <div style="background:var(--color-charcoal); border-radius:var(--radius-xl); padding:1.75rem; color:white; margin-bottom:1.5rem; position:relative; overflow:hidden;">
+          <div style="position:relative; z-index:1;">
+            <div class="flex items-center justify-between mb-3">
+              <div>
+                <p style="font-size:0.75rem; color:rgba(255,255,255,0.5);">Job #NK-2026-0042</p>
+                <p style="font-weight:700; font-size:1.125rem; margin-top:0.25rem;">🔧 Pipe Leak Repair</p>
+              </div>
+              <span class="badge" style="background:rgba(34,197,94,0.2); color:#86efac;">In Progress</span>
+            </div>
+            <div class="flex items-center gap-4 mb-4" style="font-size:0.875rem; color:rgba(255,255,255,0.65);">
+              <span>📍 Sector 12, Noida</span>
+              <span>💰 ₹400–₹600</span>
+              <span>⏰ Started 10:30 AM</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.07); border-radius:var(--radius-md); padding:1rem;">
+              <p style="font-size:0.875rem; color:rgba(255,255,255,0.75); margin-bottom:0.25rem;">Customer: Divyanshu Sharma</p>
+              <p style="font-size:0.8125rem; color:rgba(255,255,255,0.5);">📞 +91 98765 43210</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 mb-4">
+          <button class="btn btn-outline flex-1" style="border-radius:var(--radius-md); padding:0.75rem;" onclick="showToast('Opened chat with customer')">💬 Chat with Customer</button>
+          <button class="btn btn-accent flex-1" style="border-radius:var(--radius-md); padding:0.75rem;" onclick="markComplete()">✅ Mark Complete</button>
+        </div>
+        <div class="card" style="padding:1.5rem;">
+          <h3 class="type-h3 mb-3">Job Notes</h3>
+          <textarea class="form-textarea" rows="3" placeholder="Add notes about this job..." style="resize:vertical;"></textarea>
+          <button class="btn btn-secondary btn-sm mt-3" onclick="showToast('Notes saved!')">Save notes</button>
+        </div>
+      </div>
+
+      <!-- ===== EARNINGS ===== -->
+      <div id="section-earnings" style="display:none;">
+        <div class="dash-greeting">
+          <h1 style="font-family:var(--font-display); font-size:1.875rem;">Earnings</h1>
+        </div>
+        <div class="quick-stats" style="grid-template-columns:repeat(3,1fr); margin-bottom:2rem;">
+          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-worker-bg);">💰</div><div class="quick-stat-info"><div class="quick-stat-val">₹42,800</div><div class="quick-stat-label">Total earned (lifetime)</div></div></div>
+          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:#fde8dc;">📅</div><div class="quick-stat-info"><div class="quick-stat-val">₹8,640</div><div class="quick-stat-label">This week</div></div></div>
+          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-user-bg);">🏦</div><div class="quick-stat-info"><div class="quick-stat-val">₹38,200</div><div class="quick-stat-label">Total withdrawn</div></div></div>
+        </div>
+        <div class="earnings-chart" style="margin-bottom:2rem;">
+          <div class="flex items-center justify-between">
+            <div><p class="type-label">Monthly earnings</p><p style="font-family:var(--font-display); font-size:1.75rem; margin-top:0.25rem;">₹34,800</p></div>
+            <span class="badge badge-green">↑ 22% vs last month</span>
+          </div>
+          <div class="chart-bars">
+            <div class="chart-bar-wrap"><div class="chart-bar" style="height:40px;"></div><div class="chart-label">Aug</div></div>
+            <div class="chart-bar-wrap"><div class="chart-bar" style="height:55px;"></div><div class="chart-label">Sep</div></div>
+            <div class="chart-bar-wrap"><div class="chart-bar" style="height:68px;"></div><div class="chart-label">Oct</div></div>
+            <div class="chart-bar today"><div class="chart-bar today" style="height:90px;"></div><div class="chart-label" style="color:var(--color-accent);">Nov</div></div>
+          </div>
+        </div>
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="type-h3">Payment history</h3>
+          <button class="btn btn-accent btn-sm" onclick="showToast('Withdrawal request sent! ₹5,000 will be in your account within 24hrs.')">Withdraw ₹5,000</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Job</th><th>Customer</th><th>Amount</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Nov 2</td><td>🔧 Pipe repair</td><td>Divyanshu</td><td>₹500</td><td><span class="badge badge-blue">Pending</span></td></tr>
+              <tr><td>Nov 1</td><td>🚿 Tap fix</td><td>Priya</td><td>₹350</td><td><span class="badge badge-green">Paid</span></td></tr>
+              <tr><td>Oct 30</td><td>🔩 Fitting</td><td>Rahul</td><td>₹280</td><td><span class="badge badge-green">Paid</span></td></tr>
+              <tr><td>Oct 28</td><td>🔧 Plumbing</td><td>Arun</td><td>₹420</td><td><span class="badge badge-green">Paid</span></td></tr>
+              <tr><td>Oct 25</td><td>🚿 Tap fix</td><td>Meena</td><td>₹300</td><td><span class="badge badge-green">Paid</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== JOB HISTORY ===== -->
+      <div id="section-history" style="display:none;">
+        <div class="dash-greeting"><h1 style="font-family:var(--font-display); font-size:1.875rem;">Job History</h1></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Date</th><th>Service</th><th>Customer</th><th>Duration</th><th>Earned</th><th>Rating</th></tr></thead>
+            <tbody>
+              <tr><td>Nov 1</td><td>🔧 Plumbing</td><td>Priya Sharma</td><td>1.5 hr</td><td>₹350</td><td>⭐⭐⭐⭐⭐</td></tr>
+              <tr><td>Oct 30</td><td>🔩 Fittings</td><td>Rahul Kumar</td><td>2 hr</td><td>₹280</td><td>⭐⭐⭐⭐⭐</td></tr>
+              <tr><td>Oct 28</td><td>🔧 Pipe fix</td><td>Arun Verma</td><td>3 hr</td><td>₹420</td><td>⭐⭐⭐⭐★</td></tr>
+              <tr><td>Oct 25</td><td>🚿 Tap</td><td>Meena Joshi</td><td>1 hr</td><td>₹300</td><td>⭐⭐⭐⭐⭐</td></tr>
+              <tr><td>Oct 22</td><td>🔧 Leak fix</td><td>Sonia Singh</td><td>2.5 hr</td><td>₹500</td><td>⭐⭐⭐⭐⭐</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== PROFILE ===== -->
+      <div id="section-profile" style="display:none;">
+        <div class="dash-greeting"><h1 style="font-family:var(--font-display); font-size:1.875rem;">My Profile</h1></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:860px;">
+          <div class="card" style="padding:1.75rem;">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="avatar-placeholder" style="width:64px;height:64px;border-radius:50%;background:var(--color-worker-bg);color:var(--color-worker);font-size:1.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;">R</div>
+              <div>
+                <h3 class="type-h3">Ramesh Kumar</h3>
+                <div class="rating-stars">★★★★★</div>
+                <p class="type-body-xs text-muted">4.9 / 5.0 (284 reviews)</p>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <form style="display:flex;flex-direction:column;gap:0.875rem; margin-top:1rem;" onsubmit="event.preventDefault();showToast('Profile updated!')">
+              <div class="form-group"><label class="form-label">Full name</label><input class="form-input" type="text" value="Ramesh Kumar" /></div>
+              <div class="form-group"><label class="form-label">Phone</label><input class="form-input" type="tel" value="+91 91234 56789" /></div>
+              <div class="form-group"><label class="form-label">City</label><input class="form-input" type="text" value="Noida, Uttar Pradesh" /></div>
+              <button type="submit" class="btn btn-accent" style="border-radius:var(--radius-md);">Save changes</button>
+            </form>
+          </div>
+          <div class="card" style="padding:1.75rem;">
+            <h3 class="type-h3 mb-4">Skills & Expertise</h3>
+            <div class="skill-tags mb-4">
+              <span class="skill-tag">Plumbing</span>
+              <span class="skill-tag">Pipe Fitting</span>
+              <span class="skill-tag">Tap Repair</span>
+              <span class="skill-tag">Water Tank</span>
+              <span class="skill-tag">Drainage</span>
+            </div>
+            <div class="form-group mb-4">
+              <label class="form-label">Primary trade</label>
+              <select class="form-select"><option selected>Plumbing</option><option>Carpentry</option><option>Electrical</option></select>
+            </div>
+            <div class="form-group mb-4">
+              <label class="form-label">Experience</label>
+              <select class="form-select"><option selected>8 years</option><option>5 years</option><option>10+ years</option></select>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="form-label">Completion Rate</span>
+                <span class="font-semibold text-accent">98%</span>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" style="width:98%;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== RATINGS ===== -->
+      <div id="section-ratings" style="display:none;">
+        <div class="dash-greeting"><h1 style="font-family:var(--font-display); font-size:1.875rem;">My Ratings</h1></div>
+        <div class="card" style="padding:1.75rem; margin-bottom:1.5rem; max-width:600px;">
+          <div class="flex items-center gap-4">
+            <div style="text-align:center;">
+              <div style="font-family:var(--font-display); font-size:4rem; line-height:1;">4.9</div>
+              <div class="rating-stars" style="font-size:1.25rem;">★★★★★</div>
+              <div class="type-body-xs text-muted mt-1">284 reviews</div>
+            </div>
+            <div style="flex:1;">
+              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">5★</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:88%;"></div></div><span class="type-body-xs text-muted">250</span></div>
+              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">4★</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:9%;"></div></div><span class="type-body-xs text-muted">26</span></div>
+              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">3★</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:2%;"></div></div><span class="type-body-xs text-muted">6</span></div>
+              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">2★</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:0.5%;"></div></div><span class="type-body-xs text-muted">2</span></div>
+              <div class="flex items-center gap-2"><span class="type-body-xs" style="width:20px;">1★</span><div class="progress-bar flex-1"></div><span class="type-body-xs text-muted">0</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="padding:1.25rem; margin-bottom:0.875rem;">
+          <div class="flex items-center justify-between mb-2"><span class="font-semibold type-body-sm">Priya Sharma</span><span class="rating-stars">★★★★★</span></div>
+          <p class="type-body-sm text-muted">"Super fast and professional. Fixed the pipe leak in 30 minutes. Highly recommended!"</p>
+          <div class="type-body-xs text-subtle mt-2">Nov 1, 2026</div>
+        </div>
+        <div class="card" style="padding:1.25rem; margin-bottom:0.875rem;">
+          <div class="flex items-center justify-between mb-2"><span class="font-semibold type-body-sm">Rahul Kumar</span><span class="rating-stars">★★★★★</span></div>
+          <p class="type-body-sm text-muted">"Very skilled and honest. Did not overcharge. Will definitely call again."</p>
+          <div class="type-body-xs text-subtle mt-2">Oct 30, 2026</div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    const h2 = new Date().getHours();
+    const g2 = h2 < 12 ? 'Good morning' : h2 < 17 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('greetingTime2').textContent = g2;
+
+    function showSection(id) {
+      ['home','jobs','active','earnings','history','profile','ratings'].forEach(s => {
+        const el = document.getElementById(`section-${s}`);
+        if (el) el.style.display = s === id ? 'block' : 'none';
+      });
+      document.querySelectorAll('.sidebar-item').forEach(item => {
+        const txt = item.textContent.trim().toLowerCase();
+        item.classList.toggle('active',
+          (id === 'home' && txt.startsWith('dashboard')) ||
+          (id === 'jobs' && txt.includes('request')) ||
+          (id === 'active' && txt.includes('active')) ||
+          (id === 'earnings' && txt === 'earnings') ||
+          (id === 'history' && txt.includes('history')) ||
+          (id === 'profile' && txt === 'my profile') ||
+          (id === 'ratings' && txt === 'ratings')
+        );
+      });
+    }
+
+    function filterJobs(f, el) {
+      document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    function toggleAvailability(checkbox) {
+      const label = document.getElementById('availLabel');
+      label.textContent = checkbox.checked ? '🟢 Available' : '🔴 Offline';
+      showToast(checkbox.checked ? 'You are now visible to customers' : 'You are now offline');
+    }
+
+    function acceptJob(btn, name) {
+      btn.textContent = 'Accepted ✓';
+      btn.style.background = '#22c55e';
+      btn.disabled = true;
+      showToast(`Job accepted: ${name}! Head to the location 🚗`);
+    }
+
+    function markComplete() {
+      showToast('Job marked as complete! Payment processing... 💰');
+      setTimeout(() => showSection('home'), 2000);
+    }
+  </script>
+</body>
+</html>
