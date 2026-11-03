@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { 
+    title: 'Sign In', 
+    description: 'Sign in to NAKKO Cooperative Gig Platform as a service client, skilled worker, or platform administrator.' 
+  }) %>
+  <style>
+    body {
+      min-height: 100vh;
+      background: var(--bg-app);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login-layout {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+    }
+
+    /* ---- Left Brand Panel ---- */
+    .login-panel-left {
+      background: #111827;
+      padding: 3.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      color: white;
+    }
+
+    .login-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--color-accent);
+      color: white;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-brand-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.02em;
+    }
+
+    .login-left-content {
+      position: relative;
+      z-index: 1;
+      max-width: 440px;
+      margin: 2rem 0;
+    }
+
+    .login-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: white;
+      margin-bottom: 1.25rem;
+    }
+
+    .login-tagline em {
+      font-style: italic;
+      color: #86efac;
+    }
+
+    .login-desc {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 2.5rem;
+    }
+
+    .login-stat {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .login-stat-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #86efac;
+    }
+
+    .login-stat-text {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.2rem;
+    }
+
+    .login-stat-num {
+      font-size: 0.8125rem;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    /* ---- Right Form Panel ---- */
+    .login-panel-right {
+      background: var(--bg-surface);
+      padding: 3rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+    }
+
+    .login-form-wrap {
+      max-width: 420px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .login-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .login-form-header {
+      margin-bottom: 1.75rem;
+    }
+
+    .login-form-title {
+      font-family: var(--font-display);
+      font-size: 1.875rem;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .login-form-subtitle {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* Auth Tabs */
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.75rem;
+      gap: 1.5rem;
+    }
+
+    .auth-tab {
+      padding: 0.625rem 0;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    .auth-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .auth-tab.active {
+      color: var(--color-accent);
+      border-bottom-color: var(--color-accent);
+    }
+
+    /* Role Selector Cards */
+    .role-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 0.625rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .role-option {
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.875rem 0.625rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      background: var(--bg-surface);
+    }
+
+    .role-option:hover {
+      border-color: var(--color-accent);
+      transform: translateY(-1px);
+    }
+
+    .role-option.selected {
+      border-color: var(--color-accent);
+      background: rgba(45, 106, 79, 0.08);
+      box-shadow: 0 0 0 1px var(--color-accent);
+    }
+
+    .role-option-icon {
+      width: 28px;
+      height: 28px;
+      margin: 0 auto 0.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-accent);
+    }
+
+    .role-option.selected .role-option-icon {
+      color: var(--color-accent);
+    }
+
+    .role-option-label {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.15rem;
+    }
+
+    .role-option-desc {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-input-icon-wrap {
+      position: relative;
+    }
+
+    .form-input-icon {
+      position: absolute;
+      left: 0.875rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .form-input-icon-wrap .form-input {
+      padding-left: 2.5rem;
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 0.875rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .divider-or {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .divider-or::before,
+    .divider-or::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    .divider-or::before { margin-right: 0.875rem; }
+    .divider-or::after { margin-left: 0.875rem; }
+
+    .btn-social {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-social:hover {
+      background: var(--bg-app);
+      border-color: var(--border-color-hover);
+    }
+
+    @media (max-width: 900px) {
+      .login-layout {
+        grid-template-columns: 1fr;
+      }
+      .login-panel-left {
+        display: none;
+      }
+      .login-panel-right {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-layout">
+    <!-- ===== LEFT BRAND PANEL ===== -->
+    <div class="login-panel-left">
+      <div>
+        <a href="/" class="login-brand">
+          <div class="login-brand-icon">N</div>
+          <span class="login-brand-name">NAKKO</span>
+        </a>
+      </div>
+
+      <div class="login-left-content">
+        <h1 class="login-tagline">
+          Fair gig economy<br/>
+          for <em>every worker</em>
+        </h1>
+        <p class="login-desc">
+          Connecting verified daily-wage professionals directly with individuals and organizations. Transparent matching, instant payouts, and escrow protection without middleman exploitation.
+        </p>
+
+        <div class="login-stat">
+          <div class="login-stat-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div>
+            <div class="login-stat-text">Direct Cooperative Matching</div>
+            <div class="login-stat-num">Fast worker dispatch without agency commission fees</div>
+          </div>
+        </div>
+
+        <div class="login-stat">
+          <div class="login-stat-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="login-stat-text">Escrow Protected Payments</div>
+            <div class="login-stat-num">Funds released securely upon verified service completion</div>
+          </div>
+        </div>
+
+        <div class="login-stat">
+          <div class="login-stat-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div>
+            <div class="login-stat-text">Verified Skills & Government KYC</div>
+            <div class="login-stat-num">Trade assessment and identity validation for every provider</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="position:relative; z-index:1; font-size:0.8125rem; color:rgba(255,255,255,0.45);">
+        &copy; <%= new Date().getFullYear() %> NAKKO Cooperative Platform. All rights reserved.
+      </div>
+    </div>
+
+    <!-- ===== RIGHT PANEL (Sign in / Register Form) ===== -->
+    <div class="login-panel-right">
+      <div class="login-form-wrap">
+        <!-- Top bar with Back Link and Theme Toggle -->
+        <div class="login-top-bar">
+          <a href="/" style="font-size:0.8125rem; color:var(--text-muted); display:inline-flex; align-items:center; gap:0.35rem;">
+            &larr; Back to Home
+          </a>
+          <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
+            <svg class="sun-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="moon-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </button>
+        </div>
+
+        <div class="login-form-header">
+          <h2 class="login-form-title" id="formTitle">Welcome back</h2>
+          <p class="login-form-subtitle" id="formSubtitle">Sign in to your account to continue</p>
+        </div>
+
+        <!-- Auth Tabs -->
+        <div class="auth-tabs" role="tablist">
+          <button type="button" class="auth-tab active" id="loginTab" onclick="switchTab('login')">Sign in</button>
+          <button type="button" class="auth-tab" id="registerTab" onclick="switchTab('register')">Create account</button>
+        </div>
+
+        <!-- ===== SIGN IN FORM ===== -->
+        <div id="loginContent" class="tab-content active">
+          <form class="login-form" id="signInForm" onsubmit="handleLoginSubmit(event)">
+            <!-- Role selector for Sign In -->
+            <div>
+              <p class="form-label mb-2">Sign in as</p>
+              <div class="role-selector">
+                <div class="role-option selected" id="login-role-user" onclick="selectLoginRole('user')">
+                  <div class="role-option-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  </div>
+                  <div class="role-option-label">Client</div>
+                  <div class="role-option-desc">Book service</div>
+                </div>
+                <div class="role-option" id="login-role-worker" onclick="selectLoginRole('worker')">
+                  <div class="role-option-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  </div>
+                  <div class="role-option-label">Worker</div>
+                  <div class="role-option-desc">Earn money</div>
+                </div>
+                <div class="role-option" id="login-role-dev" onclick="selectLoginRole('dev')">
+                  <div class="role-option-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                  </div>
+                  <div class="role-option-label">Admin / Author</div>
+                  <div class="role-option-desc">Platform portal</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email (Clean, NO pre-filled dummy value) -->
+            <div class="form-group">
+              <label class="form-label" for="loginEmail">Email address</label>
+              <div class="form-input-icon-wrap">
+                <svg class="form-input-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <input class="form-input" type="email" id="loginEmail" placeholder="Enter your email" required autocomplete="email" />
+              </div>
+            </div>
+
+            <!-- Password (Clean, NO pre-filled dummy value) -->
+            <div class="form-group">
+              <div class="flex items-center justify-between">
+                <label class="form-label" for="loginPassword">Password</label>
+                <button type="button" class="type-body-xs text-muted" onclick="showForgotPassword(event)" style="background:none;border:none;padding:0;cursor:pointer;text-decoration:underline;">Forgot password?</button>
+              </div>
+              <div class="password-wrap">
+                <input class="form-input" type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password" style="padding-right:2.75rem;" />
+                <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)" aria-label="Toggle password visibility">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" id="loginBtn" class="btn btn-primary w-full" style="padding:0.85rem; font-size:0.9375rem; border-radius:var(--radius-md);">
+              Sign in to NAKKO
+            </button>
+
+            <div class="divider-or">or continue with</div>
+
+            <button type="button" class="btn-social" onclick="showToast('Google OAuth 2.0 gateway ready for production.')">
+              <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              Continue with Google
+            </button>
+          </form>
+
+          <div class="text-center mt-6 type-body-sm text-muted">
+            Don't have an account? <button type="button" onclick="switchTab('register')" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-accent);font-weight:600;text-decoration:underline;">Create one &rarr;</button>
+          </div>
+        </div>
+
+        <!-- ===== REGISTER FORM (Client and Worker ONLY - Admin removed) ===== -->
+        <div id="registerContent" class="tab-content">
+          <form class="login-form" id="registerForm" onsubmit="handleRegisterSubmit(event)">
+            <div>
+              <p class="form-label mb-2">I want to join as</p>
+              <!-- ONLY Client and Worker (Admin cannot be created here) -->
+              <div class="role-selector" style="grid-template-columns: 1fr 1fr;">
+                <div class="role-option selected" id="reg-role-user" onclick="selectRegisterRole('user')">
+                  <div class="role-option-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  </div>
+                  <div class="role-option-label">Client</div>
+                  <div class="role-option-desc">Book service</div>
+                </div>
+                <div class="role-option" id="reg-role-worker" onclick="selectRegisterRole('worker')">
+                  <div class="role-option-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                  </div>
+                  <div class="role-option-label">Worker</div>
+                  <div class="role-option-desc">Earn money</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="regFirstName">First name</label>
+                <input class="form-input" type="text" id="regFirstName" placeholder="First name" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="regLastName">Last name</label>
+                <input class="form-input" type="text" id="regLastName" placeholder="Last name" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regEmail">Email address</label>
+              <div class="form-input-icon-wrap">
+                <svg class="form-input-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <input class="form-input" type="email" id="regEmail" placeholder="Enter your email" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regPhone">Phone number</label>
+              <div class="form-input-icon-wrap">
+                <svg class="form-input-icon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.16h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6.06 6.06l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <input class="form-input" type="tel" id="regPhone" placeholder="+91 98765 43210" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regPassword">Password</label>
+              <div class="password-wrap">
+                <input class="form-input" type="password" id="regPassword" placeholder="Create a secure password" required style="padding-right:2.75rem;" />
+                <button type="button" class="password-toggle" onclick="togglePassword('regPassword', this)" aria-label="Toggle password">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Worker-specific fields -->
+            <div id="workerFields" style="display:none; gap:1rem; flex-direction:column;">
+              <div class="form-group">
+                <label class="form-label" for="regSkill">Primary skill / trade</label>
+                <select class="form-select" id="regSkill">
+                  <option value="">Select your skill</option>
+                  <option>Plumbing</option>
+                  <option>Carpentry</option>
+                  <option>Electrical</option>
+                  <option>Painting</option>
+                  <option>Cleaning</option>
+                  <option>Gardening</option>
+                  <option>AC Repair</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="regExp">Years of experience</label>
+                <select class="form-select" id="regExp">
+                  <option value="">Select experience</option>
+                  <option>1-3 years</option>
+                  <option>3-5 years</option>
+                  <option>5-10 years</option>
+                  <option>10+ years</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" id="registerBtn" class="btn btn-primary w-full" style="padding:0.85rem; font-size:0.9375rem; border-radius:var(--radius-md);">
+              Create NAKKO Account
+            </button>
+
+            <p class="type-body-xs text-center text-subtle" style="margin-top:0.5rem;">
+              By creating an account, you agree to our <a href="/terms" style="color:var(--color-accent); font-weight:600; text-decoration:underline;">Terms of Service</a> and <a href="/privacy" style="color:var(--color-accent); font-weight:600; text-decoration:underline;">Privacy Policy</a>.
+            </p>
+          </form>
+
+          <div class="text-center mt-6 type-body-sm text-muted">
+            Already have an account? <button type="button" onclick="switchTab('login')" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-accent);font-weight:600;text-decoration:underline;">Sign in &rarr;</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/services/apiClient.js"></script>
+  <script src="/js/services/authService.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    let currentLoginRole = '<%= queryRole || "user" %>';
+    let currentRegisterRole = '<%= queryRole || "user" %>';
+    if (currentRegisterRole === 'dev') currentRegisterRole = 'user';
+
+    // Check query params
+    const initialTab = '<%= queryTab || "login" %>';
+    if (initialTab === 'register') switchTab('register');
+    if (currentLoginRole) {
+      selectLoginRole(currentLoginRole);
+      selectRegisterRole(currentRegisterRole);
+    }
+
+    function switchTab(tab) {
+      const isLogin = tab === 'login';
+      document.getElementById('loginTab').classList.toggle('active', isLogin);
+      document.getElementById('registerTab').classList.toggle('active', !isLogin);
+      document.getElementById('loginContent').classList.toggle('active', isLogin);
+      document.getElementById('registerContent').classList.toggle('active', !isLogin);
+      document.getElementById('formTitle').textContent = isLogin ? 'Welcome back' : 'Create your account';
+      document.getElementById('formSubtitle').textContent = isLogin
+        ? 'Sign in to your account to continue'
+        : 'Join the NAKKO cooperative community';
+    }
+
+    function selectLoginRole(role) {
+      currentLoginRole = role;
+      ['user', 'worker', 'dev'].forEach(r => {
+        const el = document.getElementById(`login-role-${r}`);
+        if (el) el.classList.toggle('selected', r === role);
+      });
+      // Do NOT pre-fill fake email or password! Keep fields clean and user-driven.
+    }
+
+    function selectRegisterRole(role) {
+      // Admin is removed from registration; only client or worker allowed
+      if (role !== 'user' && role !== 'worker') role = 'user';
+      currentRegisterRole = role;
+      ['user', 'worker'].forEach(r => {
+        const el = document.getElementById(`reg-role-${r}`);
+        if (el) el.classList.toggle('selected', r === role);
+      });
+      const workerFields = document.getElementById('workerFields');
+      if (workerFields) {
+        workerFields.style.display = role === 'worker' ? 'flex' : 'none';
+      }
+    }
+
+    function togglePassword(id, btn) {
+      const input = document.getElementById(id);
+      const isText = input.type === 'text';
+      input.type = isText ? 'password' : 'text';
+      btn.innerHTML = isText
+        ? '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'
+        : '<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+    }
+
+    function showForgotPassword(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      if (!email) {
+        showToast('Please enter your email address to receive password reset instructions.', 'info');
+      } else {
+        showToast(`Password reset link sent to ${email}`);
+      }
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('loginBtn');
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      if (!email || !password) {
+        showToast('Please enter both email and password.', 'error');
+        return;
+      }
+
+      btn.textContent = 'Authenticating...';
+      btn.disabled = true;
+
+      try {
+        const data = await authService.login({ email, password, role: currentLoginRole });
+        if (data.success && (data.redirectUrl || data.user)) {
+          showToast(`Welcome back, ${data.user.name}!`);
+          const target = data.redirectUrl || (currentLoginRole === 'worker' ? '/dashboard/worker' : currentLoginRole === 'dev' ? '/dashboard/dev' : '/dashboard/user');
+          setTimeout(() => { window.location.href = target; }, 400);
+        } else {
+          showToast(data.message || 'Login failed. Please check credentials.', 'error');
+          btn.textContent = 'Sign in to NAKKO';
+          btn.disabled = false;
+        }
+      } catch (err) {
+        showToast(err.message || 'Authentication error. Please check credentials.', 'error');
+        btn.textContent = 'Sign in to NAKKO';
+        btn.disabled = false;
+      }
+    }
+
+    async function handleRegisterSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('registerBtn');
+      const firstName = document.getElementById('regFirstName').value.trim();
+      const lastName = document.getElementById('regLastName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const skill = document.getElementById('regSkill') ? document.getElementById('regSkill').value : null;
+
+      if (!firstName || !lastName || !email || !password) {
+        showToast('Please fill out all required fields.', 'error');
+        return;
+      }
+
+      btn.textContent = 'Creating account...';
+      btn.disabled = true;
+
+      try {
+        const payload = {
+          name: `${firstName} ${lastName}`.trim(),
+          email,
+          password,
+          phone,
+          role: currentRegisterRole,
+          trade: skill
+        };
+
+        const data = await authService.register(payload);
+        if (data.success && (data.redirectUrl || data.user)) {
+          showToast(`Account created successfully! Welcome to NAKKO.`);
+          const target = data.redirectUrl || (currentRegisterRole === 'worker' ? '/dashboard/worker' : '/dashboard/user');
+          setTimeout(() => { window.location.href = target; }, 500);
+        } else {
+          showToast(data.message || 'Registration failed.', 'error');
+          btn.textContent = 'Create NAKKO Account';
+          btn.disabled = false;
+        }
+      } catch (err) {
+        showToast(err.message || 'Registration failed. Please try again.', 'error');
+        btn.textContent = 'Create NAKKO Account';
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>

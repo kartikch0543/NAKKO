@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { 
+    title: 'Terms of Service', 
+    description: 'Terms of Service for NAKKO Cooperative Gig Platform. Clear rules on fair wages, escrow safety, service requests, and mutual respect.' 
+  }) %>
+  <style>
+    .legal-container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 120px 1.5rem 5rem;
+    }
+    .legal-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .legal-section {
+      margin-bottom: 2.5rem;
+    }
+    .legal-section:last-child {
+      margin-bottom: 0;
+    }
+    .legal-section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+    .legal-section p, .legal-section li {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+    .legal-section ul {
+      padding-left: 1.25rem;
+      list-style-type: disc;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <main class="legal-container">
+    <div class="text-center mb-6">
+      <span class="badge badge-blue mb-3">Cooperative Bylaws</span>
+      <h1 class="type-h1">Terms of Service</h1>
+      <p class="type-body text-muted mt-2">Effective Date: January 1, 2026 | Last Updated: March 2026</p>
+    </div>
+
+    <div class="legal-content">
+      <div class="legal-section">
+        <h2>1. Agreement to Terms</h2>
+        <p>By accessing or using the NAKKO platform as either a service client or a registered tradesperson, you agree to be bound by these Terms of Service. These rules are designed to protect both the worker providing manual labor and the household or business hiring their services.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>2. Cooperative Model & Fair Compensation</h2>
+        <p>NAKKO is founded on cooperative principles:</p>
+        <ul>
+          <li><strong>No Arbitrary Platform Cuts:</strong> One hundred percent of the baseline trade service fee belongs directly to the daily-wage worker.</li>
+          <li><strong>Transparent Flat Cooperative Fee:</strong> A small, fixed operational fee is collected only to maintain the verification infrastructure, SMS gateways, and secure server operations.</li>
+          <li><strong>No Wage Exploitation:</strong> Bidding wars that force daily-wage workers below baseline subsistence rates are strictly prohibited.</li>
+        </ul>
+      </div>
+
+      <div class="legal-section">
+        <h2>3. Escrow Mechanism and Payment Safety</h2>
+        <p>To eliminate wage theft and ensure client satisfaction, all payments follow an escrow protocol:</p>
+        <ul>
+          <li>When a client confirms a booking, the agreed amount is held securely in escrow.</li>
+          <li>Upon arrival and satisfactory completion of the requested work, the client authorizes payment release.</li>
+          <li>Funds are transferred instantly to the worker's verified bank or UPI account.</li>
+          <li>If a worker is unable to complete the service or fails to arrive, the full escrow amount is promptly refunded to the client.</li>
+        </ul>
+      </div>
+
+      <div class="legal-section">
+        <h2>4. Worker Standards and Verification</h2>
+        <p>Workers enrolled on NAKKO agree to provide truthful identity records (government photo identification) and uphold professional trade standards in plumbing, electrical work, masonry, carpentry, deep cleaning, and gardening. Misrepresentation of skills or dangerous safety practices will lead to immediate suspension from the cooperative network.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>5. Mutual Respect and Safety</h2>
+        <p>NAKKO maintains zero tolerance for discrimination, harassment, verbal abuse, or unsafe working conditions. Clients must provide safe, accessible work environments for service tasks, and workers must perform services with care, honesty, and professional diligence.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>6. Dispute Resolution</h2>
+        <p>If an issue arises regarding service quality or incomplete work, either party may file a review within 48 hours. A cooperative mediator will examine job photos, timestamps, and mutual statements to issue a fair resolution.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>7. Contact Information</h2>
+        <p>For questions or disputes regarding service terms, please contact:</p>
+        <p><strong>NAKKO Cooperative Services Trust</strong><br/>
+        Email: <a href="mailto:terms@nakko.in" style="color:var(--color-accent);">terms@nakko.in</a><br/>
+        Phone: <a href="tel:+919876543210" style="color:var(--color-accent);">+91 98765 43210</a></p>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>
+

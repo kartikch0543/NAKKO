@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { 
+    title: 'Privacy Policy', 
+    description: 'Privacy Policy for NAKKO Cooperative Gig Platform. Learn how we handle worker verification data, client records, and payment security.' 
+  }) %>
+  <style>
+    .legal-container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 120px 1.5rem 5rem;
+    }
+    .legal-content {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      margin-top: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .legal-section {
+      margin-bottom: 2.5rem;
+    }
+    .legal-section:last-child {
+      margin-bottom: 0;
+    }
+    .legal-section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+    }
+    .legal-section p, .legal-section li {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+    .legal-section ul {
+      padding-left: 1.25rem;
+      list-style-type: disc;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/nav') %>
+
+  <main class="legal-container">
+    <div class="text-center mb-6">
+      <span class="badge badge-green mb-3">Transparency & Trust</span>
+      <h1 class="type-h1">Privacy Policy</h1>
+      <p class="type-body text-muted mt-2">Effective Date: January 1, 2026 | Last Updated: March 2026</p>
+    </div>
+
+    <div class="legal-content">
+      <div class="legal-section">
+        <h2>1. Overview and Cooperative Principles</h2>
+        <p>NAKKO operates as a decentralized, cooperative-first platform dedicated to connecting skilled daily-wage professionals (plumbers, electricians, carpenters, cleaners, and other trade workers) with neighborhood households and local businesses. We believe in total data sovereignty: we collect only what is strictly necessary to arrange, verify, and complete service requests and process escrow-backed payments.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>2. Information We Collect</h2>
+        <p>We collect information you provide directly to us when creating an account, requesting a service, or enrolling as a verified cooperative worker:</p>
+        <ul>
+          <li><strong>Client Account Data:</strong> Name, phone number, email address, service address, and specific booking requirements.</li>
+          <li><strong>Worker Verification Data:</strong> Full legal name, mobile contact, primary trade qualification, identity proof (government-issued Aadhaar or DigiLocker verification), and bank account or UPI details for direct payout settlement.</li>
+          <li><strong>Transaction & Service Logs:</strong> Service completion timestamps, escrow release approvals, invoice records, and performance ratings.</li>
+        </ul>
+      </div>
+
+      <div class="legal-section">
+        <h2>3. How We Use Your Information</h2>
+        <p>Your data is used solely to facilitate fair and dependable gig matching:</p>
+        <ul>
+          <li>To match qualified nearby workers with client service requests based on proximity and trade requirements.</li>
+          <li>To enforce safety protocols, identity validation, and fair-wage compliance.</li>
+          <li>To process transparent escrow payments and release funds directly to worker accounts.</li>
+          <li>To send operational transaction updates, arrival notices, and service completion receipts via SMS or notifications.</li>
+        </ul>
+      </div>
+
+      <div class="legal-section">
+        <h2>4. Data Protection and Zero-Sale Policy</h2>
+        <p><strong>We do not sell, rent, or trade personal data to third-party advertisers or data brokers.</strong> Worker and client data is protected with TLS encryption in transit and AES-256 encryption at rest. Worker government identity documents are inspected solely for fraud prevention and KYC compliance, and are never made publicly visible on client search screens.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>5. Location Data Usage</h2>
+        <p>Location coordinates are collected only with your explicit permission to determine job proximity and calculate estimated arrival times. Background location tracking is disabled immediately after job completion.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>6. Your Rights and Data Access</h2>
+        <p>You have the full right to inspect, correct, export, or permanently delete your account information at any time. To request a complete data export or account closure, email our cooperative governance team at <a href="mailto:privacy@nakko.in" style="color:var(--color-accent); font-weight:600;">privacy@nakko.in</a>.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>7. Contact Governance</h2>
+        <p>For questions or concerns regarding our privacy standards, write to:</p>
+        <p><strong>NAKKO Cooperative Services Trust</strong><br/>
+        Sector 62, Noida, Uttar Pradesh 201309, India<br/>
+        Email: <a href="mailto:support@nakko.in" style="color:var(--color-accent);">support@nakko.in</a><br/>
+        Direct: <a href="tel:+919876543210" style="color:var(--color-accent);">+91 98765 43210</a></p>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+  <script src="/js/main.js"></script>
+</body>
+</html>
+

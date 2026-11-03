@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { 
+    title: 'Connecting Workers with Opportunity', 
+    description: 'NAKKO connects verified daily-wage plumbers, electricians, cleaners, and carpenters directly with households and local businesses with transparent pricing and escrow safety.' 
+  }) %>
+  <style>
+    /* Homepage Specific Styles */
+    .hero-home {
+      padding-top: 120px;
+      padding-bottom: 5rem;
+      text-align: center;
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5.5vw + 0.5rem, 4.75rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      max-width: 860px;
+      margin: 0 auto 1.5rem;
+      text-wrap: balance;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--color-accent);
+    }
+    .hero-subtext {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+    .guarantees-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      padding: 1.75rem 2rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      max-width: 980px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-sm);
+      text-align: left;
+    }
+    .guarantee-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+    }
+    .guarantee-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      background: rgba(45, 106, 79, 0.1);
+      color: var(--color-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .guarantee-title {
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+    }
+    .guarantee-desc {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .how-section { background: var(--bg-surface); }
+    .step-num {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--color-accent);
+      color: white;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .features-section { background: var(--bg-app); }
+    .feature-card {
+      background: var(--bg-surface);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-color);
+      padding: 2rem;
+      transition: all var(--transition-base);
+    }
+    .feature-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .trades-section {
+      background: var(--bg-surface);
+    }
+    .trade-card {
+      background: var(--bg-app);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-xl);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all var(--transition-base);
+    }
+    .trade-card:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-sm);
+    }
+    .trade-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .cta-banner {
+      background: #111827;
+      color: white;
+      border-radius: var(--radius-xl);
+      padding: 4.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45, 106, 79, 0.3) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(69, 123, 157, 0.25) 0%, transparent 70%);
+      bottom: -80px; left: -60px;
+      pointer-events: none;
+    }
+    .cta-banner-content { position: relative; z-index: 1; }
+
+    @media (max-width: 900px) {
+      .guarantees-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .guarantees-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <%- include('partials/nav') %>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero-home">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Cooperative Gig Platform for Local Skilled Labor
+      </div>
+
+      <h1 class="hero-headline">
+        Direct, Fair Work for<br/>
+        Local <em>Daily-Wage Trades</em>
+      </h1>
+
+      <p class="hero-subtext">
+        Hire verified neighborhood plumbers, electricians, cleaners, and carpenters with upfront pricing and escrow protection. A worker-owned cooperative connecting households directly with skilled tradespeople without middleman agency cuts.
+      </p>
+
+      <div class="hero-cta-group">
+        <!-- Prominent Green Book a Service button -->
+        <a href="/login?tab=register&role=user" class="btn btn-primary btn-lg" style="background:#52b788; color:#0f291e; border:none; font-weight:700; display:inline-flex; align-items:center; gap:0.5rem;">
+          Book a service
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/login?tab=register&role=worker" class="btn btn-outline btn-lg">
+          Join as a worker
+        </a>
+      </div>
+
+      <!-- Cooperative Guarantees Bar (Real platform values, zero fake counter numbers) -->
+      <div class="guarantees-bar">
+        <div class="guarantee-item">
+          <div class="guarantee-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div>
+            <div class="guarantee-title">Zero Middleman Cut</div>
+            <div class="guarantee-desc">100% of baseline trade fee goes directly to workers</div>
+          </div>
+        </div>
+
+        <div class="guarantee-item">
+          <div class="guarantee-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="guarantee-title">Escrow Protected</div>
+            <div class="guarantee-desc">Funds released only after satisfied service completion</div>
+          </div>
+        </div>
+
+        <div class="guarantee-item">
+          <div class="guarantee-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2-0 0-2-2h-4a2 2-0 0-2 2v16"/></svg>
+          </div>
+          <div>
+            <div class="guarantee-title">Verified Tradespeople</div>
+            <div class="guarantee-desc">Government Aadhaar ID and skill assessments required</div>
+          </div>
+        </div>
+
+        <div class="guarantee-item">
+          <div class="guarantee-icon">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div>
+            <div class="guarantee-title">Upfront Pricing</div>
+            <div class="guarantee-desc">Transparent hourly or fixed job pricing with no hidden charges</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ROLE CARDS SECTION ===== -->
+  <section class="section-sm" style="background: var(--bg-app);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <span class="section-label">Cooperative Ecosystem</span>
+        <h2 class="type-h2 text-pretty">Built for every participant</h2>
+      </div>
+      <div class="role-card-pair">
+        <!-- Client Role -->
+        <div class="role-card role-card-user" onclick="window.location.href='/login?role=user'">
+          <div class="role-card-icon" style="color:var(--color-accent); background:rgba(45, 106, 79, 0.1);">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            <p class="type-label mb-1">For Clients</p>
+            <h3 class="type-h3">Book verified tradespeople on demand</h3>
+          </div>
+          <p class="type-body-sm text-muted">Find trusted, verified workers for household tasks, plumbing, electrical, and cleaning, with real-time status and transparent rates.</p>
+          <div style="margin-top: auto;">
+            <span class="badge badge-blue">Book a service &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Worker Role -->
+        <div class="role-card role-card-worker" onclick="window.location.href='/login?role=worker'">
+          <div class="role-card-icon" style="color:#2563eb; background:rgba(37, 99, 235, 0.1);">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <div>
+            <p class="type-label mb-1">For Workers</p>
+            <h3 class="type-h3">Find steady work and keep 100% of your labor wage</h3>
+          </div>
+          <p class="type-body-sm text-muted">Browse nearby service requests, toggle availability in one tap, build a verified track record, and receive prompt escrow payouts.</p>
+          <div style="margin-top: auto;">
+            <span class="badge badge-green">Find work &rarr;</span>
+          </div>
+        </div>
+
+        <!-- Developer Role -->
+        <div class="role-card role-card-dev" onclick="window.location.href='/login?role=dev'">
+          <div class="role-card-icon" style="color:#d97706; background:rgba(217, 119, 6, 0.1);">
+            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div>
+            <p class="type-label mb-1">For Platform Authors</p>
+            <h3 class="type-h3">Platform oversight and telemetry</h3>
+          </div>
+          <p class="type-body-sm text-muted">Access the real-time admin portal, REST API explorer, KYC verification queues, and cooperative governance configuration.</p>
+          <div style="margin-top: auto;">
+            <span class="badge badge-purple">Admin portal &rarr;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section id="how-it-works" class="section how-section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <span class="section-label">Simple Process</span>
+        <h2 class="type-h2">How NAKKO Works</h2>
+        <p class="type-body text-muted mt-4 max-w-md mx-auto">From booking to completion: designed to be straightforward, fair, and reliable across mobile and desktop.</p>
+      </div>
+
+      <div class="grid-3 mt-10">
+        <!-- Step 1 -->
+        <div>
+          <div class="card card-flat" style="padding: 2rem; height: 100%;">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem;">
+              <div class="step-num">1</div>
+              <span class="badge badge-blue">Client</span>
+            </div>
+            <h3 class="type-h3 mb-3">Request a Service</h3>
+            <p class="type-body-sm text-muted">Select your trade requirement (plumbing, cleaning, wiring, or carpentry), set your address, preferred arrival time, and budget.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div>
+          <div class="card card-flat" style="padding: 2rem; height: 100%;">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem;">
+              <div class="step-num">2</div>
+              <span class="badge badge-green">Worker</span>
+            </div>
+            <h3 class="type-h3 mb-3">Nearby Worker Accepts</h3>
+            <p class="type-body-sm text-muted">Available, verified neighborhood workers receive your booking. Once accepted, you receive arrival updates and worker profile details.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div>
+          <div class="card card-flat" style="padding: 2rem; height: 100%;">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem;">
+              <div class="step-num">3</div>
+              <span class="badge badge-default">Escrow</span>
+            </div>
+            <h3 class="type-h3 mb-3">Complete & Release Pay</h3>
+            <p class="type-body-sm text-muted">The worker performs the requested trade task. When you confirm satisfactory completion, escrow funds are transferred directly to the worker.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SUPPORTED TRADES (Real, grounded cooperative service catalog) ===== -->
+  <section id="trades" class="section trades-section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <span class="section-label">Neighborhood Trades</span>
+        <h2 class="type-h2">Supported Cooperative Services</h2>
+        <p class="type-body text-muted mt-3 max-w-md mx-auto">All workers undergo trade skill assessment and government identity verification.</p>
+      </div>
+
+      <div class="grid-3">
+        <!-- Trade 1 -->
+        <div class="trade-card">
+          <div>
+            <div class="trade-card-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+            </div>
+            <h3 class="type-h3 mb-2">Plumbing & Sanitary</h3>
+            <p class="type-body-sm text-muted mb-4">Leak detection, pipe replacements, tap fixes, bathroom fittings, and drainage unblocking.</p>
+          </div>
+          <div class="flex items-center justify-between pt-4" style="border-top:1px solid var(--border-color);">
+            <span class="type-body-xs font-semibold text-muted">From ₹250 / visit</span>
+            <a href="/login?tab=register&role=user" class="btn btn-secondary btn-sm">Book &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Trade 2 -->
+        <div class="trade-card">
+          <div>
+            <div class="trade-card-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h3 class="type-h3 mb-2">Electrical & Wiring</h3>
+            <p class="type-body-sm text-muted mb-4">Short-circuit repair, MCB fixes, switchboard installation, ceiling fans, and appliance wiring.</p>
+          </div>
+          <div class="flex items-center justify-between pt-4" style="border-top:1px solid var(--border-color);">
+            <span class="type-body-xs font-semibold text-muted">From ₹300 / visit</span>
+            <a href="/login?tab=register&role=user" class="btn btn-secondary btn-sm">Book &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Trade 3 -->
+        <div class="trade-card">
+          <div>
+            <div class="trade-card-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 class="type-h3 mb-2">Deep Home Cleaning</h3>
+            <p class="type-body-sm text-muted mb-4">Kitchen degreasing, bathroom sanitization, floor scrubbing, and post-tenancy cleaning.</p>
+          </div>
+          <div class="flex items-center justify-between pt-4" style="border-top:1px solid var(--border-color);">
+            <span class="type-body-xs font-semibold text-muted">From ₹200 / hour</span>
+            <a href="/login?tab=register&role=user" class="btn btn-secondary btn-sm">Book &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Trade 4 -->
+        <div class="trade-card">
+          <div>
+            <div class="trade-card-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <h3 class="type-h3 mb-2">Carpentry & Woodwork</h3>
+            <p class="type-body-sm text-muted mb-4">Door lock fitting, hinge repair, furniture assembly, custom shelving, and cabinet adjustments.</p>
+          </div>
+          <div class="flex items-center justify-between pt-4" style="border-top:1px solid var(--border-color);">
+            <span class="type-body-xs font-semibold text-muted">From ₹350 / visit</span>
+            <a href="/login?tab=register&role=user" class="btn btn-secondary btn-sm">Book &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Trade 5 -->
+        <div class="trade-card">
+          <div>
+            <div class="trade-card-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h3 class="type-h3 mb-2">Lawn & Gardening</h3>
+            <p class="type-body-sm text-muted mb-4">Hedge trimming, plant pruning, lawn mowing, weed removal, and soil nourishment.</p>
+          </div>
+          <div class="flex items-center justify-between pt-4" style="border-top:1px solid var(--border-color);">
+            <span class="type-body-xs font-semibold text-muted">From ₹220 / visit</span>
+            <a href="/login?tab=register&role=user" class="btn btn-secondary btn-sm">Book &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Trade 6 -->
+        <div class="trade-card">
+          <div>
+            <div class="trade-card-icon">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h3 class="type-h3 mb-2">Painting & Touch-ups</h3>
+            <p class="type-body-sm text-muted mb-4">Single room painting, water seepage patches, wall putty application, and exterior touch-ups.</p>
+          </div>
+          <div class="flex items-center justify-between pt-4" style="border-top:1px solid var(--border-color);">
+            <span class="type-body-xs font-semibold text-muted">From ₹400 / room</span>
+            <a href="/login?tab=register&role=user" class="btn btn-secondary btn-sm">Book &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section id="features" class="section features-section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <span class="section-label">Trust & Safety</span>
+        <h2 class="type-h2">Built for Transparency</h2>
+      </div>
+      <div class="grid-3">
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-green">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Government KYC Verified</h3>
+          <p class="type-body-sm text-muted">Every worker on NAKKO completes identity check and trade verification before receiving customer jobs.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-blue">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Status & Location Tracking</h3>
+          <p class="type-body-sm text-muted">Track your worker status in real time from job acceptance to arrival with transparent ETA notices.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-orange">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Escrow Protected Payouts</h3>
+          <p class="type-body-sm text-muted">Pay only when the job is confirmed. Funds are held in escrow and released on completion, protecting both sides.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(45, 106, 79, 0.1); color:var(--color-accent);">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Cooperative Model</h3>
+          <p class="type-body-sm text-muted">NAKKO operates as a cooperative: workers earn their full trade wage without arbitrary corporate deductions.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-green">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Direct Earnings Ledger</h3>
+          <p class="type-body-sm text-muted">Workers receive transparent daily breakdowns, job logs, and direct UPI or bank account payouts.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon feature-icon-blue">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">High Performance Architecture</h3>
+          <p class="type-body-sm text-muted">Powered by a high-throughput Express.js backend and modular REST APIs built for fast response times.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA SECTION (Fixed: Visible Green Book a Service button) ===== -->
+  <section id="about" class="section" style="background: var(--bg-app);">
+    <div class="container">
+      <div class="cta-banner">
+        <div class="cta-banner-content">
+          <span class="section-label" style="background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.85);">Start Today</span>
+          <h2 class="type-h2 mt-4 mb-4" style="color:white; font-family: var(--font-display);">Ready to Join the<br/>NAKKO Community?</h2>
+          <p class="type-body mb-8" style="color:rgba(255,255,255,0.75); max-width:480px; margin-left:auto; margin-right:auto;">Whether you need an urgent repair or want to offer your trade services: NAKKO makes it simple, fair, and reliable.</p>
+          <div class="flex items-center justify-center gap-4 flex-wrap">
+            <!-- FIXED GREEN BUTTON (100% visible with crisp contrast) -->
+            <a href="/login?tab=register&role=user" class="btn btn-primary btn-lg" style="background:#52b788; color:#0f291e; border:none; font-weight:700; display:inline-flex; align-items:center; gap:0.5rem;">
+              Book a service
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="/login?tab=register&role=worker" class="btn btn-lg btn-outline" style="border-color:rgba(255,255,255,0.4); color:white;">
+              Join as a worker
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <%- include('partials/footer') %>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
