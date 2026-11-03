@@ -1,4 +1,15 @@
 {
+  "name": "nakko-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend API for a cooperative-based gig services platform",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "node --check src/server.js && node --check src/config/db.js && echo Server syntax check OK!"
+  },
   "dependencies": {
     "cors": "^2.8.6",
     "dotenv": "^18.0.9",
