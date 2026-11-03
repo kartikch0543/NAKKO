@@ -1,0 +1,69 @@
+<!-- ===== MOBILE BOTTOM NAVIGATION BAR ===== -->
+<!-- Displayed on screens <= 768px for 1-tap navigation -->
+<nav class="mobile-bottom-nav <%= locals.themeClass || '' %>" aria-label="Mobile Bottom Navigation">
+  <% if (role === 'user') { %>
+    <button type="button" class="mobile-bottom-item active" data-section="home" onclick="showSection('home')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="bookings" onclick="showSection('bookings')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Bookings</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="tracking" onclick="showSection('tracking')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>Live Track</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="history" onclick="showSection('history')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span>History</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="profile" onclick="showSection('profile')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Profile</span>
+    </button>
+  <% } else if (role === 'worker') { %>
+    <button type="button" class="mobile-bottom-item active" data-section="home" onclick="showSection('home')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      <span>Overview</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="jobs" onclick="showSection('jobs')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <span>Requests</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="active" onclick="showSection('active')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span>Active Job</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="earnings" onclick="showSection('earnings')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      <span>Earnings</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="profile" onclick="showSection('profile')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>My Trade</span>
+    </button>
+  <% } else { %>
+    <button type="button" class="mobile-bottom-item active" data-section="overview" onclick="showSection('overview')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      <span>Metrics</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="status" onclick="showSection('status')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span>Status</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="api" onclick="showSection('api')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      <span>API Docs</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" data-section="logs" onclick="showSection('logs')">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span>Logs</span>
+    </button>
+    <button type="button" class="mobile-bottom-item" onclick="document.querySelector('.sidebar').classList.add('mobile-open'); document.querySelector('.sidebar-backdrop').classList.add('active');">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+      <span>More</span>
+    </button>
+  <% } %>
+</nav>
+

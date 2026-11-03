@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head', { title: 'Connecting Workers with Opportunity' }) %>
+  <style>
+    /* Homepage Specific Styles */
+    .hero-home {
+      padding-top: 120px;
+      padding-bottom: 5rem;
+      text-align: center;
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw + 0.5rem, 5.25rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--color-foreground);
+      max-width: 820px;
+      margin: 0 auto 1.5rem;
+      text-wrap: balance;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--color-accent);
+    }
+    .hero-subtext {
+      font-size: 1.125rem;
+      color: var(--color-muted);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.875rem;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+    .stats-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      padding: 1.75rem 2rem;
+      background: var(--color-paper);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      max-width: 820px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-sm);
+    }
+    .stats-bar-item { text-align: center; }
+    .stats-bar-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--color-foreground);
+      margin-bottom: 0.25rem;
+    }
+    .stats-bar-label { font-size: 0.8125rem; color: var(--color-muted); }
+    .stats-divider { width: 1px; height: 40px; background: var(--color-border); }
+
+    .how-section { background: var(--color-paper); }
+    .step-num {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--color-charcoal);
+      color: white;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .features-section { background: var(--color-bg); }
+    .feature-card {
+      background: var(--color-paper);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--color-border);
+      padding: 2rem;
+      transition: all var(--transition-base);
+    }
+    .feature-card:hover {
+      border-color: var(--color-border-hover);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .testimonial-card {
+      background: var(--color-paper);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+    }
+    .testimonial-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--color-foreground);
+      margin-bottom: 1.25rem;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+    .testimonial-name { font-size: 0.875rem; font-weight: 600; }
+    .testimonial-role { font-size: 0.8125rem; color: var(--color-muted); }
+
+    .cta-banner {
+      background: var(--color-charcoal);
+      color: white;
+      border-radius: var(--radius-xl);
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(45, 106, 79, 0.3) 0%, transparent 70%);
+      top: -100px; right: -100px;
+    }
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(69, 123, 157, 0.25) 0%, transparent 70%);
+      bottom: -80px; left: -60px;
+    }
+    .cta-banner-content { position: relative; z-index: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <%- include('partials/nav') %>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero-home">
+    <div class="container">
+      <div class="hero-badge animate-fade-up">
+        <span class="hero-badge-dot"></span>
+        Empowering daily-wage workers across India
+      </div>
+
+      <h1 class="hero-headline animate-fade-up delay-1">
+        Where daily workers<br/>
+        meet <em>real opportunity</em>
+      </h1>
+
+      <p class="hero-subtext animate-fade-up delay-2">
+        NAKKO is a cooperative gig platform connecting skilled daily-wage workers with people who need them — fairly, efficiently, and reliably.
+      </p>
+
+      <div class="hero-cta-group animate-fade-up delay-3">
+        <a href="/login?tab=register&role=user" class="btn btn-primary btn-lg">
+          Book a service
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/login?tab=register&role=worker" class="btn btn-outline btn-lg">
+          Join as a worker
+        </a>
+      </div>
+
+      <!-- Stats Bar (Responsive Grid on Mobile) -->
+      <div class="stats-bar animate-fade-up delay-4">
+        <div class="stats-bar-item">
+          <div class="stats-bar-num">12,400+</div>
+          <div class="stats-bar-label">Registered Workers</div>
+        </div>
+        <div class="stats-divider"></div>
+        <div class="stats-bar-item">
+          <div class="stats-bar-num">98.4%</div>
+          <div class="stats-bar-label">Job Completion Rate</div>
+        </div>
+        <div class="stats-divider"></div>
+        <div class="stats-bar-item">
+          <div class="stats-bar-num">56K+</div>
+          <div class="stats-bar-label">Services Delivered</div>
+        </div>
+        <div class="stats-divider"></div>
+        <div class="stats-bar-item">
+          <div class="stats-bar-num">4.9 ★</div>
+          <div class="stats-bar-label">Average Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ROLE CARDS SECTION ===== -->
+  <section class="section-sm" style="background: var(--color-bg);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <span class="section-label">Who is NAKKO for?</span>
+        <h2 class="type-h2 text-pretty">Built for everyone in the ecosystem</h2>
+      </div>
+      <div class="role-card-pair">
+        <!-- User Role -->
+        <div class="role-card role-card-user animate-fade-up delay-1" onclick="window.location.href='/login?role=user'">
+          <div class="role-card-icon">🏠</div>
+          <div>
+            <p class="type-label mb-1">For users</p>
+            <h3 class="type-h3">Book services you need, right when you need them</h3>
+          </div>
+          <p class="type-body-sm text-muted">Find trusted, verified workers for household tasks, plumbing, electrical, cleaning, and more — with real-time tracking and fair pricing.</p>
+          <div style="margin-top: auto;">
+            <span class="badge badge-blue">Book a service →</span>
+          </div>
+        </div>
+
+        <!-- Worker Role -->
+        <div class="role-card role-card-worker animate-fade-up delay-2" onclick="window.location.href='/login?role=worker'">
+          <div class="role-card-icon">🔧</div>
+          <div>
+            <p class="type-label mb-1">For workers</p>
+            <h3 class="type-h3">Find steady work and get paid fairly</h3>
+          </div>
+          <p class="type-body-sm text-muted">Browse nearby jobs, set your availability in one tap, and build a track record. Get paid promptly with full transparency on earnings.</p>
+          <div style="margin-top: auto;">
+            <span class="badge badge-green">Find work →</span>
+          </div>
+        </div>
+
+        <!-- Developer Role -->
+        <div class="role-card role-card-dev animate-fade-up delay-3" onclick="window.location.href='/login?role=dev'">
+          <div class="role-card-icon">⚙️</div>
+          <div>
+            <p class="type-label mb-1">For developers & admins</p>
+            <h3 class="type-h3">Manage, monitor, and scale the platform</h3>
+          </div>
+          <p class="type-body-sm text-muted">Access the real-time admin panel, REST API explorer, system analytics, and worker allocation engine to keep NAKKO running smoothly.</p>
+          <div style="margin-top: auto;">
+            <span class="badge badge-purple">Admin portal →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section id="how-it-works" class="section how-section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <span class="section-label">Simple process</span>
+        <h2 class="type-h2">How NAKKO works</h2>
+        <p class="type-body text-muted mt-4 max-w-md mx-auto">From booking to completion — designed to be fast, fair, and friction-free for both mobile & web.</p>
+      </div>
+
+      <div class="grid-3 mt-10">
+        <!-- Step 1 -->
+        <div class="animate-fade-up delay-1">
+          <div class="card card-flat" style="padding: 2rem; height: 100%;">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem;">
+              <div class="step-num">1</div>
+              <span class="badge badge-blue">Users</span>
+            </div>
+            <h3 class="type-h3 mb-3">Post your requirement</h3>
+            <p class="type-body-sm text-muted">Describe the service you need, set your address, preferred time, and budget. Takes less than 2 minutes on phone or desktop.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="animate-fade-up delay-2">
+          <div class="card card-flat" style="padding: 2rem; height: 100%;">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem;">
+              <div class="step-num">2</div>
+              <span class="badge badge-green">Workers</span>
+            </div>
+            <h3 class="type-h3 mb-3">Workers accept & arrive</h3>
+            <p class="type-body-sm text-muted">Nearby verified workers see your request and accept instantly. You get real-time status updates and worker profile details before they arrive.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="animate-fade-up delay-3">
+          <div class="card card-flat" style="padding: 2rem; height: 100%;">
+            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:1.25rem;">
+              <div class="step-num">3</div>
+              <span class="badge badge-default">Both</span>
+            </div>
+            <h3 class="type-h3 mb-3">Complete & pay securely</h3>
+            <p class="type-body-sm text-muted">Work gets done, you confirm completion, payment processes automatically via escrow. Leave a review to help the cooperative community.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section id="features" class="section features-section">
+    <div class="container">
+      <div class="text-center mb-12">
+        <span class="section-label">Platform features</span>
+        <h2 class="type-h2">Built for trust, safety and transparency</h2>
+      </div>
+      <div class="grid-3">
+        <div class="feature-card animate-fade-up delay-1">
+          <div class="feature-icon feature-icon-green">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Verified Workers</h3>
+          <p class="type-body-sm text-muted">Every worker on NAKKO goes through identity verification and trade skill assessment before being listed on the platform.</p>
+        </div>
+        <div class="feature-card animate-fade-up delay-2">
+          <div class="feature-icon feature-icon-blue">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Real-time Tracking</h3>
+          <p class="type-body-sm text-muted">Track your worker's location in real time from acceptance to arrival. No more waiting without knowing.</p>
+        </div>
+        <div class="feature-card animate-fade-up delay-3">
+          <div class="feature-icon feature-icon-orange">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Fair & Secure Payments</h3>
+          <p class="type-body-sm text-muted">Pay only when the job is done. Funds are held in escrow and released on completion — protecting both sides.</p>
+        </div>
+        <div class="feature-card animate-fade-up delay-1">
+          <div class="feature-icon feature-icon-purple">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Cooperative Model</h3>
+          <p class="type-body-sm text-muted">NAKKO operates as a cooperative — workers earn fairly, have a voice, and share in the platform's collective success.</p>
+        </div>
+        <div class="feature-card animate-fade-up delay-2">
+          <div class="feature-icon feature-icon-green">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Earnings Dashboard</h3>
+          <p class="type-body-sm text-muted">Workers get a full earnings breakdown, job history, and performance analytics to track their daily growth.</p>
+        </div>
+        <div class="feature-card animate-fade-up delay-3">
+          <div class="feature-icon feature-icon-blue">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 class="type-h3 mb-2">Node.js High Performance</h3>
+          <p class="type-body-sm text-muted">Powered by a high-throughput Express.js backend and real-time REST API engine built for scale and low latency.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section id="for-workers" class="section" style="background: var(--color-paper);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <span class="section-label">Real stories</span>
+        <h2 class="type-h2">Heard from our community</h2>
+      </div>
+      <div class="grid-3">
+        <div class="testimonial-card animate-fade-up delay-1">
+          <p class="testimonial-text">"NAKKO gave me consistent work for the first time. I used to wait at the roadside hoping someone would hire me. Now I earn 40% more and plan my week."</p>
+          <div class="testimonial-author">
+            <div class="avatar-placeholder avatar-md" style="font-size:1.1rem; background:#d8f3dc; color: var(--color-worker);">R</div>
+            <div>
+              <div class="testimonial-name">Ramesh Kumar</div>
+              <div class="testimonial-role">Plumber · Worker since 2025</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card animate-fade-up delay-2">
+          <p class="testimonial-text">"I found a reliable carpenter within 30 minutes for an urgent repair. The worker was verified, professional, and the whole thing was charged fairly. Excellent."</p>
+          <div class="testimonial-author">
+            <div class="avatar-placeholder avatar-md" style="font-size:1.1rem; background:#e8f4f8; color: var(--color-user);">P</div>
+            <div>
+              <div class="testimonial-name">Priya Sharma</div>
+              <div class="testimonial-role">Homeowner · User</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card animate-fade-up delay-3">
+          <p class="testimonial-text">"The Node.js API is clean and well-documented. We integrated NAKKO's worker availability endpoints into our housing society app in less than an hour."</p>
+          <div class="testimonial-author">
+            <div class="avatar-placeholder avatar-md" style="font-size:1.1rem; background:#ede9fe; color: var(--color-dev);">A</div>
+            <div>
+              <div class="testimonial-name">Aditya Menon</div>
+              <div class="testimonial-role">Developer · Integration Partner</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA SECTION ===== -->
+  <section id="about" class="section" style="background: var(--color-bg);">
+    <div class="container">
+      <div class="cta-banner">
+        <div class="cta-banner-content">
+          <span class="section-label" style="background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.85);">Start today</span>
+          <h2 class="type-h2 mt-4 mb-4" style="color:white; font-family: var(--font-display);">Ready to join the<br/>NAKKO community?</h2>
+          <p class="type-body mb-8" style="color:rgba(255,255,255,0.7); max-width:440px; margin-left:auto; margin-right:auto;">Whether you need a service or want to offer one — NAKKO makes it simple, fair, and reliable.</p>
+          <div class="flex items-center justify-center gap-4 flex-wrap">
+            <a href="/login?tab=register&role=user" class="btn btn-lg" style="background:white; color:var(--color-foreground);">Book a service</a>
+            <a href="/login?tab=register&role=worker" class="btn btn-lg btn-outline" style="border-color:rgba(255,255,255,0.4); color:white;">Join as a worker</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <%- include('partials/footer') %>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
+
