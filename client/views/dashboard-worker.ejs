@@ -104,7 +104,7 @@
     <aside class="sidebar" role="navigation" aria-label="Sidebar Navigation">
       <div style="padding:1rem 0 0.5rem 1rem; display:flex; align-items:center; justify-content:space-between;" class="mobile-dash-toggle">
         <span class="type-body-sm font-semibold">Worker Navigation</span>
-        <button type="button" onclick="document.querySelector('.sidebar').classList.remove('mobile-open'); document.querySelector('.sidebar-backdrop').classList.remove('active');" style="font-size:1.25rem; padding:0.25rem 0.5rem; color:var(--text-muted);">✕</button>
+        <button type="button" onclick="document.querySelector('.sidebar').classList.remove('mobile-open'); document.querySelector('.sidebar-backdrop').classList.remove('active');" style="font-size:1.25rem; padding:0.25rem 0.5rem; color:var(--text-muted);"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
       </div>
 
       <div class="sidebar-section-label">Work</div>
@@ -134,7 +134,7 @@
       </div>
       <div class="sidebar-item" onclick="showSection('ratings')">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <span>Ratings (4.9 ★)</span>
+        <span>Ratings (4.9 / 5.0)</span>
       </div>
       <div class="sidebar-item" onclick="showSection('profile')">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -163,28 +163,28 @@
         <!-- Quick Stats -->
         <div class="quick-stats">
           <div class="quick-stat-card">
-            <div class="quick-stat-icon" style="background:var(--color-worker-bg); color:var(--color-worker);">💰</div>
+            <div class="quick-stat-icon" style="background:var(--color-worker-bg); color:var(--color-worker);"></div>
             <div class="quick-stat-info">
               <div class="quick-stat-val">₹<%= (locals.worker && worker.earningsToday) ? worker.earningsToday : '1,250' %></div>
               <div class="quick-stat-label">Today's Earnings</div>
             </div>
           </div>
           <div class="quick-stat-card">
-            <div class="quick-stat-icon" style="background:var(--color-user-bg); color:var(--color-user);">📅</div>
+            <div class="quick-stat-icon" style="background:var(--color-user-bg); color:var(--color-user);"></div>
             <div class="quick-stat-info">
               <div class="quick-stat-val">₹<%= (locals.worker && worker.earningsThisMonth) ? worker.earningsThisMonth.toLocaleString() : '18,450' %></div>
               <div class="quick-stat-label">This Month</div>
             </div>
           </div>
           <div class="quick-stat-card">
-            <div class="quick-stat-icon" style="background:var(--color-warning-bg); color:var(--color-warning);">⚡</div>
+            <div class="quick-stat-icon" style="background:var(--color-warning-bg); color:var(--color-warning);"></div>
             <div class="quick-stat-info">
               <div class="quick-stat-val">1</div>
               <div class="quick-stat-label">Active Job</div>
             </div>
           </div>
           <div class="quick-stat-card">
-            <div class="quick-stat-icon" style="background:var(--color-dev-bg); color:var(--color-dev);">★</div>
+            <div class="quick-stat-icon" style="background:var(--color-dev-bg); color:var(--color-dev);"></div>
             <div class="quick-stat-info">
               <div class="quick-stat-val"><%= (locals.worker && worker.rating) ? worker.rating : '4.9' %></div>
               <div class="quick-stat-label">Rating (<%= (locals.worker && worker.reviewsCount) ? worker.reviewsCount : '284' %> reviews)</div>
@@ -203,7 +203,7 @@
           </div>
           <div class="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h3 class="type-h3 mb-1">🔧 Plumbing – Sink Leak Repair</h3>
+              <h3 class="type-h3 mb-1"> Plumbing  -  Sink Leak Repair</h3>
               <p class="type-body-sm text-muted">Customer: <strong>Divyanshu Sharma</strong> · Block 4, Sector 12, Noida</p>
               <p class="type-body-xs text-subtle mt-1">Payout: ₹450 · Held in Escrow</p>
             </div>
@@ -243,14 +243,14 @@
           <div class="job-request-header">
             <div>
               <div class="job-request-service">Bathroom Shower & Tap Fixture Fitting</div>
-              <div class="job-request-urgency">⚡ Urgent · Required within 45 mins</div>
+              <div class="job-request-urgency"> Urgent · Required within 45 mins</div>
             </div>
             <span class="badge badge-green">₹550</span>
           </div>
           <div class="job-request-details">
-            <div class="job-detail">📍 Sector 18, Noida (1.8 km)</div>
-            <div class="job-detail">👤 Ananya Verma</div>
-            <div class="job-detail">🕒 Starts ~3:30 PM</div>
+            <div class="job-detail"> Sector 18, Noida (1.8 km)</div>
+            <div class="job-detail"> Ananya Verma</div>
+            <div class="job-detail"> Starts ~3:30 PM</div>
           </div>
           <div class="job-request-actions">
             <button class="btn btn-primary btn-sm" onclick="acceptJob(this, 'Bathroom Shower & Tap Fixture Fitting')">Accept Job</button>
@@ -267,9 +267,9 @@
             <span class="badge badge-green">₹700</span>
           </div>
           <div class="job-request-details">
-            <div class="job-detail">📍 Sector 22, Noida (2.4 km)</div>
-            <div class="job-detail">👤 Rohit Kapoor</div>
-            <div class="job-detail">🕒 Tomorrow, 10:00 AM</div>
+            <div class="job-detail"> Sector 22, Noida (2.4 km)</div>
+            <div class="job-detail"> Rohit Kapoor</div>
+            <div class="job-detail"> Tomorrow, 10:00 AM</div>
           </div>
           <div class="job-request-actions">
             <button class="btn btn-primary btn-sm" onclick="acceptJob(this, 'Water Tank Valve Replacement')">Accept Job</button>
@@ -291,10 +291,10 @@
         </div>
         <div class="job-request">
           <div class="job-request-header">
-            <div><div class="job-request-service">Kitchen Sink Pipe Replacement</div><div class="job-request-urgency">⚡ Urgent</div></div>
+            <div><div class="job-request-service">Kitchen Sink Pipe Replacement</div><div class="job-request-urgency"> Urgent</div></div>
             <span class="badge badge-green">₹450</span>
           </div>
-          <div class="job-request-details"><div class="job-detail">📍 Sector 12 (0.9 km)</div><div class="job-detail">👤 Divyanshu S.</div></div>
+          <div class="job-request-details"><div class="job-detail"> Sector 12 (0.9 km)</div><div class="job-detail"> Divyanshu S.</div></div>
           <div class="job-request-actions"><button class="btn btn-primary btn-sm" onclick="acceptJob(this, 'Kitchen Sink Pipe')">Accept</button><button class="btn btn-secondary btn-sm" onclick="declineJob(this, 'Kitchen Sink Pipe')">Decline</button></div>
         </div>
         <div class="job-request">
@@ -302,7 +302,7 @@
             <div><div class="job-request-service">Bathroom Drain Clog Clearing</div><div class="job-request-urgency">Normal</div></div>
             <span class="badge badge-green">₹400</span>
           </div>
-          <div class="job-request-details"><div class="job-detail">📍 Sector 15 (1.5 km)</div><div class="job-detail">👤 Meera Sen</div></div>
+          <div class="job-request-details"><div class="job-detail"> Sector 15 (1.5 km)</div><div class="job-detail"> Meera Sen</div></div>
           <div class="job-request-actions"><button class="btn btn-primary btn-sm" onclick="acceptJob(this, 'Bathroom Drain Clog')">Accept</button><button class="btn btn-secondary btn-sm" onclick="declineJob(this, 'Bathroom Drain Clog')">Decline</button></div>
         </div>
       </div>
@@ -317,9 +317,9 @@
           <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
             <div>
               <h2 class="type-h3">Customer: Divyanshu Sharma</h2>
-              <p class="type-body-sm text-muted">📍 Block 4, Sector 12, Noida, UP · Arrived at location</p>
+              <p class="type-body-sm text-muted"> Block 4, Sector 12, Noida, UP · Arrived at location</p>
             </div>
-            <button class="btn btn-secondary btn-sm" onclick="showToast('Calling +91 98765 43210...')">📞 Call Customer</button>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('Calling +91 98765 43210...')"> Call Customer</button>
           </div>
           <div class="divider"></div>
           <div class="mb-4">
@@ -329,7 +329,7 @@
           <div class="flex items-center justify-between p-4 rounded-lg mb-6" style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-md);">
             <div><div class="type-body-xs text-muted">Agreed Payout</div><div class="type-h3 text-accent">₹450</div></div>
             <div><div class="type-body-xs text-muted">Payment Mode</div><div class="font-semibold type-body-sm">Escrow Protected</div></div>
-            <div><div class="type-body-xs text-muted">Customer Rating</div><div class="font-semibold type-body-sm">★ 4.9 (Safe User)</div></div>
+            <div><div class="type-body-xs text-muted">Customer Rating</div><div class="font-semibold type-body-sm">4.9 / 5.0 (Safe User)</div></div>
           </div>
           <div class="flex gap-3 flex-wrap">
             <button class="btn btn-primary" onclick="markJobComplete()">
@@ -346,10 +346,10 @@
       <div id="section-earnings" style="display:none;">
         <div class="dash-greeting"><h1 class="dash-greeting-name">Earnings & Payouts</h1></div>
         <div class="quick-stats mb-6">
-          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-worker-bg); color:var(--color-worker);">💵</div><div class="quick-stat-info"><div class="quick-stat-val">₹18,450</div><div class="quick-stat-label">This Month</div></div></div>
-          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-user-bg); color:var(--color-user);">🏦</div><div class="quick-stat-info"><div class="quick-stat-val">₹1,250</div><div class="quick-stat-label">Ready for Payout</div></div></div>
-          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-warning-bg); color:var(--color-warning);">📈</div><div class="quick-stat-info"><div class="quick-stat-val">₹1,42,800</div><div class="quick-stat-label">Lifetime Earned</div></div></div>
-          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-dev-bg); color:var(--color-dev);">🤝</div><div class="quick-stat-info"><div class="quick-stat-val">88%</div><div class="quick-stat-label">Worker Share</div></div></div>
+          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-worker-bg); color:var(--color-worker);"></div><div class="quick-stat-info"><div class="quick-stat-val">₹18,450</div><div class="quick-stat-label">This Month</div></div></div>
+          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-user-bg); color:var(--color-user);"></div><div class="quick-stat-info"><div class="quick-stat-val">₹1,250</div><div class="quick-stat-label">Ready for Payout</div></div></div>
+          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-warning-bg); color:var(--color-warning);"></div><div class="quick-stat-info"><div class="quick-stat-val">₹1,42,800</div><div class="quick-stat-label">Lifetime Earned</div></div></div>
+          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-dev-bg); color:var(--color-dev);"></div><div class="quick-stat-info"><div class="quick-stat-val">88%</div><div class="quick-stat-label">Worker Share</div></div></div>
         </div>
         <div class="card p-6">
           <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
@@ -357,7 +357,7 @@
             <button class="btn btn-secondary btn-sm" onclick="showToast('Bank details verified')">Edit Bank Details</button>
           </div>
           <p class="type-body-sm text-muted mb-4">State Bank of India · A/C: ••••••••••4812 · IFSC: SBIN0001234</p>
-          <button class="btn btn-primary" onclick="showToast('Payout of ₹1,250 initiated to your SBI bank account! 💰')">Instant Withdrawal (IMPS)</button>
+          <button class="btn btn-primary" onclick="showToast('Payout of ₹1,250 initiated to your SBI bank account! ')">Instant Withdrawal (IMPS)</button>
         </div>
       </div>
 
@@ -368,10 +368,10 @@
           <table>
             <thead><tr><th>Job ID</th><th>Customer</th><th>Service</th><th>Date</th><th>Earnings</th><th>Rating</th></tr></thead>
             <tbody>
-              <tr><td>#NK-0038</td><td>Priya Sharma</td><td>Bathroom Tap Fix</td><td>Oct 28</td><td>₹450</td><td>★★★★★</td></tr>
-              <tr><td>#NK-0035</td><td>Rahul Gupta</td><td>Geyser Pipe Fit</td><td>Oct 26</td><td>₹550</td><td>★★★★★</td></tr>
-              <tr><td>#NK-0031</td><td>Vikram Jain</td><td>Drain Pipe Unclog</td><td>Oct 24</td><td>₹400</td><td>★★★★★</td></tr>
-              <tr><td>#NK-0027</td><td>Amit Singh</td><td>Main Valve Change</td><td>Oct 20</td><td>₹650</td><td>★★★★★</td></tr>
+              <tr><td>#NK-0038</td><td>Priya Sharma</td><td>Bathroom Tap Fix</td><td>Oct 28</td><td>₹450</td><td>5.0 / 5.0</td></tr>
+              <tr><td>#NK-0035</td><td>Rahul Gupta</td><td>Geyser Pipe Fit</td><td>Oct 26</td><td>₹550</td><td>5.0 / 5.0</td></tr>
+              <tr><td>#NK-0031</td><td>Vikram Jain</td><td>Drain Pipe Unclog</td><td>Oct 24</td><td>₹400</td><td>5.0 / 5.0</td></tr>
+              <tr><td>#NK-0027</td><td>Amit Singh</td><td>Main Valve Change</td><td>Oct 20</td><td>₹650</td><td>5.0 / 5.0</td></tr>
             </tbody>
           </table>
         </div>
@@ -418,24 +418,24 @@
           <div class="flex items-center gap-6">
             <div style="text-align:center;">
               <div style="font-family:var(--font-display); font-size:4rem; line-height:1; color:var(--text-primary);"><%= (locals.worker && worker.rating) ? worker.rating : '4.9' %></div>
-              <div class="rating-stars">★★★★★</div>
+              <div class="rating-stars">5.0 / 5.0</div>
               <div class="type-body-xs text-muted mt-1"><%= (locals.worker && worker.reviewsCount) ? worker.reviewsCount : '284' %> verified reviews</div>
             </div>
             <div style="flex:1;">
-              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">5★</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:88%;"></div></div><span class="type-body-xs text-muted">250</span></div>
-              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">4★</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:9%;"></div></div><span class="type-body-xs text-muted">26</span></div>
-              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">3★</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:2%;"></div></div><span class="type-body-xs text-muted">6</span></div>
-              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">2★</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:0.5%;"></div></div><span class="type-body-xs text-muted">2</span></div>
+              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">5 / 5.0</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:88%;"></div></div><span class="type-body-xs text-muted">250</span></div>
+              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">4 / 5.0</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:9%;"></div></div><span class="type-body-xs text-muted">26</span></div>
+              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">3 / 5.0</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:2%;"></div></div><span class="type-body-xs text-muted">6</span></div>
+              <div class="flex items-center gap-2 mb-2"><span class="type-body-xs" style="width:20px;">2 / 5.0</span><div class="progress-bar flex-1"><div class="progress-fill" style="width:0.5%;"></div></div><span class="type-body-xs text-muted">2</span></div>
             </div>
           </div>
         </div>
         <div class="card p-5 mb-3">
-          <div class="flex items-center justify-between mb-1"><span class="font-semibold type-body-sm">Priya Sharma</span><span class="rating-stars">★★★★★</span></div>
+          <div class="flex items-center justify-between mb-1"><span class="font-semibold type-body-sm">Priya Sharma</span><span class="rating-stars">5.0 / 5.0</span></div>
           <p class="type-body-sm text-muted">"Super fast and professional. Fixed the pipe leak in 30 minutes. Honest pricing!"</p>
           <div class="type-body-xs text-subtle mt-2">Nov 1, 2026</div>
         </div>
         <div class="card p-5 mb-3">
-          <div class="flex items-center justify-between mb-1"><span class="font-semibold type-body-sm">Rahul Kumar</span><span class="rating-stars">★★★★★</span></div>
+          <div class="flex items-center justify-between mb-1"><span class="font-semibold type-body-sm">Rahul Kumar</span><span class="rating-stars">5.0 / 5.0</span></div>
           <p class="type-body-sm text-muted">"Very skilled and honest. Did not overcharge for parts. Highly recommended."</p>
           <div class="type-body-xs text-subtle mt-2">Oct 30, 2026</div>
         </div>
@@ -479,7 +479,7 @@
     async function toggleWorkerStatus(checkbox) {
       const isOnline = checkbox.checked;
       const label = document.getElementById('availLabel');
-      label.textContent = isOnline ? '🟢 Available' : '🔴 Offline';
+      label.textContent = isOnline ? '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--color-success);margin-right:4px;"></span> Available' : '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--color-warning);margin-right:4px;"></span> Offline';
 
       try {
         await workerService.setAvailability('w-101', isOnline);
@@ -490,7 +490,7 @@
     }
 
     async function acceptJob(btn, title) {
-      btn.textContent = 'Accepted ✓';
+      btn.textContent = 'Accepted ';
       btn.classList.remove('btn-primary');
       btn.classList.add('btn-accent');
       btn.disabled = true;

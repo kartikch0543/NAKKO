@@ -13,3 +13,4 @@ router.get('/config', getConfig);
 router.post('/config', updateConfig);
 
 export default router;
+

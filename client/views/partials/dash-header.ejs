@@ -10,7 +10,7 @@
       </svg>
     </button>
 
-    <a href="/" class="nav-logo" style="font-size:1.15rem;">
+    <a href="/" class="nav-logo" style="font-size:1.15rem;" title="Go to NAKKO Homepage">
       <div class="nav-logo-icon" style="width:30px;height:30px;font-size:0.8125rem;">N</div>
       <span class="dash-header-title-text">NAKKO</span>
     </a>
@@ -24,7 +24,10 @@
           <input type="checkbox" id="workerOnlineCheckbox" <%= workerOnline ? 'checked' : '' %> onchange="toggleWorkerStatus(this)" />
           <span class="toggle-slider"></span>
         </label>
-        <span class="availability-label" id="availLabel" style="font-size:0.8125rem; font-weight:600; color:var(--text-primary);"><%= workerOnline ? '🟢 Available' : '🔴 Offline' %></span>
+        <span class="availability-label" id="availLabel" style="font-size:0.8125rem; font-weight:600; color:var(--text-primary); display:inline-flex; align-items:center; gap:0.4rem;">
+          <span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:<%= workerOnline ? 'var(--color-success)' : 'var(--color-warning)' %>;"></span>
+          <%= workerOnline ? 'Available' : 'Offline' %>
+        </span>
       </div>
     <% } %>
 
@@ -34,7 +37,7 @@
       <svg class="moon-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
     </button>
 
-    <button type="button" class="btn-icon btn" onclick="showToast('You have 2 new platform notifications!')" aria-label="Notifications" title="Notifications">
+    <button type="button" class="btn-icon btn" onclick="showToast('Platform notifications: You have 2 updates.')" aria-label="Notifications" title="Notifications">
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
         <path d="M13.73 21a2 2 0 0 1-3.46 0"/>

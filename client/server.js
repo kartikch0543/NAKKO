@@ -67,16 +67,33 @@ app.post('/api/register', (req, res, next) => authRoutes(req, res, next));
 // Landing Page
 app.get('/', (req, res) => {
   res.render('index', {
-    title: 'NAKKO – Connecting Workers with Opportunity',
+    title: 'Connecting Workers with Opportunity',
+    description: 'NAKKO connects verified daily-wage plumbers, electricians, cleaners, and carpenters directly with households and local businesses with transparent pricing and escrow safety.',
     services: store.getServices(),
     metrics: store.getMetrics()
+  });
+});
+
+// Privacy Policy Page
+app.get('/privacy', (req, res) => {
+  res.render('privacy', {
+    title: 'Privacy Policy',
+    description: 'Learn how NAKKO protects worker and client data with full transparency.'
+  });
+});
+
+// Terms of Service Page
+app.get('/terms', (req, res) => {
+  res.render('terms', {
+    title: 'Terms of Service',
+    description: 'Cooperative gig bylaws, fair work allocation, and escrow rules on NAKKO.'
   });
 });
 
 // Authentication Page (Sign in / Register)
 app.get('/login', (req, res) => {
   res.render('login', {
-    title: 'Sign In – NAKKO',
+    title: 'Sign In',
     queryTab: req.query.tab || 'login',
     queryRole: req.query.role || 'user'
   });
@@ -85,7 +102,7 @@ app.get('/login', (req, res) => {
 // Client / User Dashboard
 const renderUserDashboard = (req, res) => {
   res.render('dashboard-user', {
-    title: 'Client Dashboard – NAKKO',
+    title: 'Client Dashboard',
     services: store.getServices(),
     bookings: store.getBookings(),
     user: {
@@ -102,7 +119,7 @@ app.get('/dashboard-user', renderUserDashboard);
 const renderWorkerDashboard = (req, res) => {
   const rameshWorker = store.getWorkerById('w-101');
   res.render('dashboard-worker', {
-    title: 'Worker Dashboard – NAKKO',
+    title: 'Worker Dashboard',
     worker: rameshWorker,
     bookings: store.getBookings().filter(b => b.workerId === 'w-101')
   });
@@ -113,7 +130,7 @@ app.get('/dashboard-worker', renderWorkerDashboard);
 // Developer & Admin Dashboard
 const renderDevDashboard = (req, res) => {
   res.render('dashboard-dev', {
-    title: 'Developer Portal – NAKKO',
+    title: 'Developer Portal',
     metrics: store.getMetrics(),
     logs: store.getLogs(),
     config: store.getConfig(),
@@ -140,7 +157,7 @@ app.get('/dashboard-dev.html', (req, res) => res.redirect(301, '/dashboard/dev')
 // ==========================================
 app.use((req, res) => {
   res.status(404).render('404', {
-    title: 'Page Not Found (404)'
+    title: 'Page Not Found'
   });
 });
 
@@ -158,14 +175,16 @@ app.use((err, req, res, next) => {
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
     console.log(`\n======================================================`);
-    console.log(`🚀 NAKKO Platform Frontend running on Node.js v${process.version}`);
-    console.log(`📡 Local Server:   http://localhost:${PORT}`);
-    console.log(`🔗 Backend Target: ${API_BASE_URL}`);
-    console.log(`🏠 Homepage:       http://localhost:${PORT}/`);
-    console.log(`🔐 Login:          http://localhost:${PORT}/login`);
-    console.log(`👤 Client Dash:    http://localhost:${PORT}/dashboard/user`);
-    console.log(`🔧 Worker Dash:    http://localhost:${PORT}/dashboard/worker`);
-    console.log(`⚙️  Dev Portal:     http://localhost:${PORT}/dashboard/dev`);
+    console.log(`Node.js Platform Frontend running on port ${PORT}`);
+    console.log(`Local Server:   http://localhost:${PORT}`);
+    console.log(`Backend Target: ${API_BASE_URL}`);
+    console.log(`Homepage:       http://localhost:${PORT}/`);
+    console.log(`Privacy Policy: http://localhost:${PORT}/privacy`);
+    console.log(`Terms:          http://localhost:${PORT}/terms`);
+    console.log(`Login:          http://localhost:${PORT}/login`);
+    console.log(`Client Dash:    http://localhost:${PORT}/dashboard/user`);
+    console.log(`Worker Dash:    http://localhost:${PORT}/dashboard/worker`);
+    console.log(`Dev Portal:     http://localhost:${PORT}/dashboard/dev`);
     console.log(`======================================================\n`);
   });
 }

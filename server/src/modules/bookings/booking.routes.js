@@ -14,3 +14,4 @@ router.patch('/:id/status', updateBookingStatus);
 router.put('/:id/status', updateBookingStatus);
 
 export default router;
+

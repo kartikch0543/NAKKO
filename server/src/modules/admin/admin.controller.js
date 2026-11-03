@@ -84,3 +84,4 @@ export function updateConfig(req, res) {
     data: platformConfig
   });
 }
+

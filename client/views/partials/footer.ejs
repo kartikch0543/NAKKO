@@ -7,34 +7,37 @@
           <div class="nav-logo-icon">N</div>
           NAKKO
         </a>
-        <p class="footer-brand-desc">A cooperative gig platform connecting daily-wage workers with service opportunities across India. Fair work, fair pay, every day.</p>
+        <p class="footer-brand-desc">A cooperative gig services platform connecting skilled daily-wage tradespeople directly with households and local businesses across India. Fair work, transparent pay, and escrow safety.</p>
+        <div style="margin-top:1.25rem; display:flex; flex-direction:column; gap:0.5rem; font-size:0.875rem;">
+          <div>Support: <a href="mailto:support@nakko.in" style="color:var(--color-accent); font-weight:600;">support@nakko.in</a></div>
+          <div>Helpline: <a href="tel:+919876543210" style="color:var(--color-accent); font-weight:600;">+91 98765 43210</a></div>
+        </div>
       </div>
       <div>
         <div class="footer-col-title">Platform</div>
-        <a href="/login?role=user" class="footer-link">For Users</a>
-        <a href="/login?role=worker" class="footer-link">For Workers</a>
-        <a href="/login?role=dev" class="footer-link">Developer Portal</a>
-        <a href="/#how-it-works" class="footer-link">How it works</a>
+        <a href="/login?role=user" class="footer-link">Book a Service</a>
+        <a href="/login?tab=register&role=worker" class="footer-link">Join as Worker</a>
+        <a href="/login?role=dev" class="footer-link">Admin Sign In</a>
+        <a href="/#how-it-works" class="footer-link">How It Works</a>
       </div>
       <div>
         <div class="footer-col-title">Dashboards</div>
-        <a href="/dashboard/user" class="footer-link">User Dashboard</a>
+        <a href="/dashboard/user" class="footer-link">Client Dashboard</a>
         <a href="/dashboard/worker" class="footer-link">Worker Dashboard</a>
-        <a href="/dashboard/dev" class="footer-link">Admin & API Dashboard</a>
-        <a href="/#features" class="footer-link">Platform Features</a>
+        <a href="/dashboard/dev" class="footer-link">Admin Portal</a>
+        <a href="/#features" class="footer-link">Platform Standards</a>
       </div>
       <div>
-        <div class="footer-col-title">Legal & Security</div>
-        <a href="#" class="footer-link" onclick="showToast('Privacy Policy: All worker and user data is encrypted.'); return false;">Privacy Policy</a>
-        <a href="#" class="footer-link" onclick="showToast('Terms of Service: Cooperative gig bylaws.'); return false;">Terms of Service</a>
-        <a href="#" class="footer-link" onclick="showToast('Worker Agreement: 100% fair payout guarantee.'); return false;">Worker Agreement</a>
-        <a href="#" class="footer-link" onclick="showToast('Escrow & Payment Safety standards.'); return false;">Payment Escrow</a>
+        <div class="footer-col-title">Legal & Trust</div>
+        <a href="/privacy" class="footer-link">Privacy Policy</a>
+        <a href="/terms" class="footer-link">Terms of Service</a>
+        <a href="mailto:support@nakko.in" class="footer-link">Report an Issue</a>
+        <a href="tel:+919876543210" class="footer-link">Toll-Free Helpline</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 NAKKO Platform. All rights reserved.</span>
-      <span>Empowering India's decentralized workforce with Node.js & modern web standards</span>
+      <span>&copy; <%= new Date().getFullYear() %> NAKKO Cooperative Platform. All rights reserved.</span>
+      <span>Empowering skilled neighborhood tradespeople with direct matching & escrow safety</span>
     </div>
   </div>
 </footer>
-

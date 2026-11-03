@@ -171,3 +171,4 @@ export async function updateBookingStatus(req, res) {
     data: booking
   });
 }
+

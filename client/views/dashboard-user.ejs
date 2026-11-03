@@ -154,7 +154,7 @@
     <aside class="sidebar" role="navigation" aria-label="Sidebar Navigation">
       <div style="padding:1rem 0 0.5rem 1rem; display:flex; align-items:center; justify-content:space-between;" class="mobile-dash-toggle">
         <span class="type-body-sm font-semibold">Client Navigation</span>
-        <button type="button" onclick="document.querySelector('.sidebar').classList.remove('mobile-open'); document.querySelector('.sidebar-backdrop').classList.remove('active');" style="font-size:1.25rem; padding:0.25rem 0.5rem; color:var(--text-muted);">✕</button>
+        <button type="button" onclick="document.querySelector('.sidebar').classList.remove('mobile-open'); document.querySelector('.sidebar-backdrop').classList.remove('active');" style="font-size:1.25rem; padding:0.25rem 0.5rem; color:var(--text-muted);"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
       </div>
 
       <div class="sidebar-section-label">Main</div>
@@ -212,28 +212,28 @@
         <!-- Quick Stats -->
         <div class="quick-stats">
           <div class="quick-stat-card">
-            <div class="quick-stat-icon" style="background:var(--color-worker-bg); color:var(--color-worker);">🔧</div>
+            <div class="quick-stat-icon" style="background:var(--color-worker-bg); color:var(--color-worker);"></div>
             <div class="quick-stat-info">
               <div class="quick-stat-val">1</div>
               <div class="quick-stat-label">Active Request</div>
             </div>
           </div>
           <div class="quick-stat-card">
-            <div class="quick-stat-icon" style="background:var(--color-user-bg); color:var(--color-user);">📦</div>
+            <div class="quick-stat-icon" style="background:var(--color-user-bg); color:var(--color-user);"></div>
             <div class="quick-stat-info">
               <div class="quick-stat-val">8</div>
               <div class="quick-stat-label">Total Services</div>
             </div>
           </div>
           <div class="quick-stat-card">
-            <div class="quick-stat-icon" style="background:var(--color-warning-bg); color:var(--color-warning);">💳</div>
+            <div class="quick-stat-icon" style="background:var(--color-warning-bg); color:var(--color-warning);"></div>
             <div class="quick-stat-info">
               <div class="quick-stat-val">₹4,280</div>
               <div class="quick-stat-label">Total Spent</div>
             </div>
           </div>
           <div class="quick-stat-card">
-            <div class="quick-stat-icon" style="background:var(--color-dev-bg); color:var(--color-dev);">★</div>
+            <div class="quick-stat-icon" style="background:var(--color-dev-bg); color:var(--color-dev);"></div>
             <div class="quick-stat-info">
               <div class="quick-stat-val">4.9</div>
               <div class="quick-stat-label">Trust Score</div>
@@ -252,8 +252,8 @@
           </div>
           <div class="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h3 class="type-h3 mb-1">🔧 Plumbing – Sink Leakage Fix</h3>
-              <p class="type-body-sm text-muted">Assigned Worker: <strong>Ramesh Kumar</strong> (★ 4.9 · 8 yrs exp) · Arrived at location</p>
+              <h3 class="type-h3 mb-1"> Plumbing  -  Sink Leakage Fix</h3>
+              <p class="type-body-sm text-muted">Assigned Worker: <strong>Ramesh Kumar</strong> (4.9 / 5.0 · 8 yrs exp) · Arrived at location</p>
             </div>
             <button class="btn btn-primary btn-sm" onclick="showSection('tracking')">Track Live Progress →</button>
           </div>
@@ -277,16 +277,16 @@
         <!-- Recent Completed Services -->
         <div class="flex items-center justify-between mb-4">
           <h2 class="type-h3">Recent Activity</h2>
-          <a href="#" onclick="showSection('history'); return false;" class="type-body-xs text-accent font-semibold">View all history →</a>
+          <button type="button" onclick="showSection('history')" class="type-body-xs text-accent font-semibold" style="background:none;border:none;padding:0;cursor:pointer;color:var(--color-accent);">View all history &rarr;</button>
         </div>
         <div class="card card-flat" style="padding:0.5rem 1.25rem;">
           <div class="table-wrap" style="border:none;">
             <table>
               <thead><tr><th>Service</th><th>Worker</th><th>Date</th><th>Amount</th><th>Status</th></tr></thead>
               <tbody>
-                <tr><td>🧹 Deep Cleaning</td><td>Sunita Devi</td><td>Oct 28</td><td>₹600</td><td><span class="badge badge-green">Done</span></td></tr>
-                <tr><td>⚡ Electrical Repair</td><td>Mohan Yadav</td><td>Oct 15</td><td>₹380</td><td><span class="badge badge-green">Done</span></td></tr>
-                <tr><td>🌿 Gardening</td><td>Lakshmi Narayan</td><td>Sep 30</td><td>₹350</td><td><span class="badge badge-green">Done</span></td></tr>
+                <tr><td> Deep Cleaning</td><td>Sunita Devi</td><td>Oct 28</td><td>₹600</td><td><span class="badge badge-green">Done</span></td></tr>
+                <tr><td> Electrical Repair</td><td>Mohan Yadav</td><td>Oct 15</td><td>₹380</td><td><span class="badge badge-green">Done</span></td></tr>
+                <tr><td> Gardening</td><td>Lakshmi Narayan</td><td>Sep 30</td><td>₹350</td><td><span class="badge badge-green">Done</span></td></tr>
               </tbody>
             </table>
           </div>
@@ -345,10 +345,10 @@
         <!-- Simulated Map -->
         <div class="tracking-map-sim">
           <div class="tracking-map-grid"></div>
-          <div class="worker-marker" title="Worker Location">🔧</div>
-          <div class="home-marker" title="Your House">🏠</div>
+          <div class="worker-marker" title="Worker Location"></div>
+          <div class="home-marker" title="Your House"></div>
           <div class="tracking-status-pill">
-            🟢 Ramesh Kumar · At destination (Block 4, Sector 12)
+             Ramesh Kumar · At destination (Block 4, Sector 12)
           </div>
         </div>
 
@@ -359,13 +359,13 @@
               <div class="avatar-placeholder avatar-lg" style="background:var(--color-worker-bg); color:var(--color-worker); font-size:1.5rem; font-weight:700;">R</div>
               <div>
                 <h3 class="type-h3">Ramesh Kumar</h3>
-                <p class="type-body-sm text-muted">Certified Master Plumber · ★ 4.9 (284 reviews)</p>
+                <p class="type-body-sm text-muted">Certified Master Plumber · 4.9 / 5.0 (284 reviews)</p>
                 <p class="type-body-xs text-subtle mt-1">Vehicle: Hero Splendor (UP-16-AX-4821)</p>
               </div>
             </div>
             <div class="flex gap-2">
-              <button class="btn btn-secondary btn-sm" onclick="showToast('Calling Ramesh Kumar (+91 91234 56789)...')">📞 Call</button>
-              <button class="btn btn-outline btn-sm" onclick="showToast('Opening encrypted in-app chat...')">💬 Message</button>
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Calling Ramesh Kumar (+91 91234 56789)...')"> Call</button>
+              <button class="btn btn-outline btn-sm" onclick="showToast('Opening encrypted in-app chat...')"> Message</button>
             </div>
           </div>
         </div>
@@ -375,28 +375,28 @@
           <h3 class="type-h3 mb-4">Service Status Progress</h3>
           <div style="display:flex; flex-direction:column; gap:1.25rem;">
             <div class="flex items-center gap-3">
-              <div style="width:28px;height:28px;border-radius:50%;background:#22c55e;color:white;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;">✓</div>
+              <div style="width:28px;height:28px;border-radius:50%;background:#22c55e;color:white;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;"></div>
               <div class="flex-1">
                 <div class="font-semibold type-body-sm">Booking Confirmed</div>
                 <div class="type-body-xs text-muted">2:15 PM · Escrow amount ₹450 reserved safely</div>
               </div>
             </div>
             <div class="flex items-center gap-3">
-              <div style="width:28px;height:28px;border-radius:50%;background:#22c55e;color:white;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;">✓</div>
+              <div style="width:28px;height:28px;border-radius:50%;background:#22c55e;color:white;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;"></div>
               <div class="flex-1">
                 <div class="font-semibold type-body-sm">Worker Assigned</div>
                 <div class="type-body-xs text-muted">2:18 PM · Ramesh Kumar accepted your request</div>
               </div>
             </div>
             <div class="flex items-center gap-3">
-              <div style="width:28px;height:28px;border-radius:50%;background:#22c55e;color:white;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;">✓</div>
+              <div style="width:28px;height:28px;border-radius:50%;background:#22c55e;color:white;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;"></div>
               <div class="flex-1">
                 <div class="font-semibold type-body-sm">Arrived at Location</div>
                 <div class="type-body-xs text-muted">2:30 PM · Worker checked in at your address</div>
               </div>
             </div>
             <div class="flex items-center gap-3">
-              <div style="width:28px;height:28px;border-radius:50%;background:var(--color-accent);color:white;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;">⚙️</div>
+              <div style="width:28px;height:28px;border-radius:50%;background:var(--color-accent);color:white;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;"></div>
               <div class="flex-1">
                 <div class="font-semibold type-body-sm text-accent">Work in Progress</div>
                 <div class="type-body-xs text-muted">Fixing pipe leakage and washer replacement</div>
@@ -412,7 +412,7 @@
           </div>
 
           <div class="mt-6 pt-4 border-t flex justify-end">
-            <button class="btn btn-primary" onclick="showToast('Completion confirmed! Payment of ₹450 released to Ramesh 🎉'); setTimeout(() => showSection('history'), 1500);">
+            <button class="btn btn-primary" onclick="showToast('Completion confirmed! Payment of ₹450 released to Ramesh '); setTimeout(() => showSection('history'), 1500);">
               Confirm Work Done & Pay
             </button>
           </div>
@@ -431,10 +431,10 @@
               <tr><th>Service</th><th>Worker</th><th>Date</th><th>Amount</th><th>Status</th><th>Action</th></tr>
             </thead>
             <tbody>
-              <tr><td>🔧 Plumbing</td><td>Ramesh Kumar</td><td>Oct 28</td><td>₹450</td><td><span class="badge badge-green">Done</span></td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Rating updated to 5 stars! ★')">Rate</button></td></tr>
-              <tr><td>🧹 Cleaning</td><td>Sunita Devi</td><td>Oct 22</td><td>₹600</td><td><span class="badge badge-green">Done</span></td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Already rated 5 stars!')">Rated ★</button></td></tr>
-              <tr><td>⚡ Electrical</td><td>Mohan Yadav</td><td>Oct 15</td><td>₹380</td><td><span class="badge badge-green">Done</span></td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Rating submitted!')">Rate</button></td></tr>
-              <tr><td>🌿 Gardening</td><td>Lakshmi Narayan</td><td>Sep 30</td><td>₹350</td><td><span class="badge badge-green">Done</span></td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Rating submitted!')">Rate</button></td></tr>
+              <tr><td> Plumbing</td><td>Ramesh Kumar</td><td>Oct 28</td><td>₹450</td><td><span class="badge badge-green">Done</span></td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Rating updated to 5 stars! ')">Rate</button></td></tr>
+              <tr><td> Cleaning</td><td>Sunita Devi</td><td>Oct 22</td><td>₹600</td><td><span class="badge badge-green">Done</span></td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Already rated 5 stars!')">Rated </button></td></tr>
+              <tr><td> Electrical</td><td>Mohan Yadav</td><td>Oct 15</td><td>₹380</td><td><span class="badge badge-green">Done</span></td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Rating submitted!')">Rate</button></td></tr>
+              <tr><td> Gardening</td><td>Lakshmi Narayan</td><td>Sep 30</td><td>₹350</td><td><span class="badge badge-green">Done</span></td><td><button class="btn btn-secondary btn-sm" onclick="showToast('Rating submitted!')">Rate</button></td></tr>
             </tbody>
           </table>
         </div>
@@ -471,8 +471,8 @@
           <h1 class="dash-greeting-name">Payments & Escrow</h1>
         </div>
         <div class="quick-stats" style="grid-template-columns:repeat(3, 1fr); margin-bottom:2rem;">
-          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:rgba(231,111,81,0.15); color:var(--color-orange);">💳</div><div class="quick-stat-info"><div class="quick-stat-val">₹4,280</div><div class="quick-stat-label">Total Spent</div></div></div>
-          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-worker-bg); color:var(--color-worker);">🛡️</div><div class="quick-stat-info"><div class="quick-stat-val">₹450</div><div class="quick-stat-label">In Escrow Protection</div></div></div>
+          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:rgba(231,111,81,0.15); color:var(--color-orange);"></div><div class="quick-stat-info"><div class="quick-stat-val">₹4,280</div><div class="quick-stat-label">Total Spent</div></div></div>
+          <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-worker-bg); color:var(--color-worker);"></div><div class="quick-stat-info"><div class="quick-stat-val">₹450</div><div class="quick-stat-label">In Escrow Protection</div></div></div>
           <div class="quick-stat-card"><div class="quick-stat-icon" style="background:var(--color-user-bg); color:var(--color-user);">↩️</div><div class="quick-stat-info"><div class="quick-stat-val">₹400</div><div class="quick-stat-label">Refunded</div></div></div>
         </div>
         <div class="table-wrap">
@@ -493,12 +493,12 @@
           <h1 class="dash-greeting-name">My Reviews</h1>
         </div>
         <div class="card p-6 mb-4">
-          <div class="flex items-center justify-between mb-2"><span class="font-semibold">🔧 Plumbing – Ramesh Kumar</span><span style="color:#f59e0b; font-weight:700;">★★★★★</span></div>
+          <div class="flex items-center justify-between mb-2"><span class="font-semibold"> Plumbing  -  Ramesh Kumar</span><span style="color:#f59e0b; font-weight:700;">5.0 / 5.0</span></div>
           <p class="type-body-sm text-muted">"Very professional and fixed the pipe leak in 30 minutes without extra charges. Highly recommended!"</p>
           <div class="type-body-xs text-subtle mt-2">Oct 28, 2026</div>
         </div>
         <div class="card p-6 mb-4">
-          <div class="flex items-center justify-between mb-2"><span class="font-semibold">🧹 Cleaning – Sunita Devi</span><span style="color:#f59e0b; font-weight:700;">★★★★★</span></div>
+          <div class="flex items-center justify-between mb-2"><span class="font-semibold"> Cleaning  -  Sunita Devi</span><span style="color:#f59e0b; font-weight:700;">5.0 / 5.0</span></div>
           <p class="type-body-sm text-muted">"Excellent work, the house was spotless. Very thorough and punctual."</p>
           <div class="type-body-xs text-subtle mt-2">Oct 22, 2026</div>
         </div>
@@ -512,7 +512,7 @@
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modal-header">
         <h3 class="modal-title" id="modalServiceName">Request Service</h3>
-        <button type="button" class="modal-close" onclick="closeBookModal()">✕</button>
+        <button type="button" class="modal-close" onclick="closeBookModal()"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
       </div>
       <form class="login-form" onsubmit="handleConfirmBooking(event)">
         <div class="form-group">
@@ -533,7 +533,7 @@
             <div class="avatar-placeholder avatar-sm" style="background:var(--color-worker-bg); color:var(--color-worker); font-weight:700;">R</div>
             <div style="flex:1;">
               <div class="font-semibold type-body-sm">Ramesh Kumar</div>
-              <div class="worker-rating">★ 4.9 · 284 jobs</div>
+              <div class="worker-rating">4.9 / 5.0 · 284 jobs</div>
             </div>
             <div class="worker-eta">~12 min</div>
           </div>
@@ -541,7 +541,7 @@
             <div class="avatar-placeholder avatar-sm" style="background:var(--color-user-bg); color:var(--color-user); font-weight:700;">M</div>
             <div style="flex:1;">
               <div class="font-semibold type-body-sm">Mohan Singh</div>
-              <div class="worker-rating">★ 4.7 · 164 jobs</div>
+              <div class="worker-rating">4.7 / 5.0 · 164 jobs</div>
             </div>
             <div class="worker-eta">~25 min</div>
           </div>
@@ -634,7 +634,7 @@
           workerId: selectedWorkerId
         });
         closeBookModal();
-        showToast(`${selectedService} requested! Verified worker assigned 🎉`);
+        showToast(`${selectedService} requested! Verified worker assigned `);
         setTimeout(() => showSection('tracking'), 600);
       } catch (err) {
         closeBookModal();

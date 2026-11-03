@@ -94,3 +94,4 @@
     delete: (endpoint, headers) => request(endpoint, { method: 'DELETE', headers })
   };
 });
+

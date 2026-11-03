@@ -10,7 +10,8 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-html, body {
+html,
+body {
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
@@ -19,7 +20,10 @@ html, body {
 
 /* Ensure inputs don't trigger iOS auto-zoom */
 @media screen and (max-width: 768px) {
-  input, select, textarea {
+
+  input,
+  select,
+  textarea {
     font-size: 16px !important;
   }
 }
@@ -110,7 +114,8 @@ html, body {
   transition: background var(--transition-fast), color var(--transition-fast);
 }
 
-.mobile-nav-link:hover, .mobile-nav-link.active {
+.mobile-nav-link:hover,
+.mobile-nav-link.active {
   background: var(--bg-card);
   color: var(--color-accent);
 }
@@ -194,9 +199,11 @@ html, body {
   background: var(--bg-header);
   border-top-color: var(--border-color);
 }
+
 .dev-theme-nav .mobile-bottom-item {
   color: var(--text-muted);
 }
+
 .dev-theme-nav .mobile-bottom-item.active {
   color: var(--color-dev);
 }
@@ -224,12 +231,14 @@ html, body {
 
 /* Mobile & Tablet Devices (<= 768px) */
 @media (max-width: 768px) {
+
   /* Navigation */
   .nav-toggle-btn {
     display: flex;
   }
 
-  .nav-links, .nav-actions {
+  .nav-links,
+  .nav-actions {
     display: none !important;
   }
 
@@ -282,7 +291,9 @@ html, body {
   }
 
   /* Features & How It Works Grids */
-  .grid-2, .grid-3, .grid-4 {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
     grid-template-columns: 1fr !important;
   }
 
@@ -427,8 +438,13 @@ html, body {
   }
 
   @keyframes slideUpMobile {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
+    from {
+      transform: translateY(100%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
   }
 
   /* Login & Register Mobile */
@@ -464,7 +480,7 @@ html, body {
     border-color: var(--border-color) !important;
   }
 
-  .job-card > div:last-child {
+  .job-card>div:last-child {
     width: 100%;
     display: flex;
     justify-content: flex-end;

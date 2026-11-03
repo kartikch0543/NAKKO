@@ -102,3 +102,4 @@ export const memoryBookings = [
 ];
 
 export const Booking = mongoose.models.Booking || mongoose.model('Booking', bookingSchema);
+

@@ -14,3 +14,4 @@ router.put('/:id/availability', updateAvailability);
 router.patch('/:id/kyc', updateKyc);
 
 export default router;
+

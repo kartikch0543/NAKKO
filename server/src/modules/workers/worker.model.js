@@ -105,3 +105,4 @@ export const memoryWorkers = [
 ];
 
 export const Worker = mongoose.models.Worker || mongoose.model('Worker', workerSchema);
+

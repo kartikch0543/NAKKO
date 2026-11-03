@@ -187,3 +187,4 @@ export function logout(req, res) {
     message: 'Session cleared successfully'
   });
 }
+

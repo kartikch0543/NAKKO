@@ -20,3 +20,4 @@ export function notFoundHandler(req, res) {
     message: `Resource not found: ${req.method} ${req.originalUrl}`
   });
 }
+

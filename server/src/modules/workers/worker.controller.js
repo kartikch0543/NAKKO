@@ -115,3 +115,4 @@ export async function updateKyc(req, res) {
     data: worker
   });
 }
+
