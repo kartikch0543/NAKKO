@@ -1,0 +1,27 @@
+{
+  "name": "nakko-platform",
+  "version": "1.0.0",
+  "description": "NAKKO - Cooperative Gig Platform connecting daily-wage workers with opportunities",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node -e \"console.log('Testing server syntax...'); const app = require('./server.js'); console.log('Syntax & imports OK!'); process.exit(0);\""
+  },
+  "keywords": [
+    "gig-platform",
+    "cooperative",
+    "daily-wage",
+    "workers",
+    "nodejs",
+    "express",
+    "ejs",
+    "responsive"
+  ],
+  "author": "Divyanshu & NAKKO Team",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^7.0.2",
+    "express": "^5.3.0"
+  }
+}
