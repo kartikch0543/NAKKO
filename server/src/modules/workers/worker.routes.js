@@ -1,17 +1,18 @@
 /**
- * NAKKO Backend - Worker Routes
+ * NAKKO Platform - Worker Routes
  */
 
-import express from 'express';
-import { getWorkers, getWorkerById, updateAvailability, updateKyc } from './worker.controller.js';
+import { Router } from 'express';
+import { getWorkers, getWorkerById, setAvailability, updateKycStatus, getEarnings } from './worker.controller.js';
+import { authenticate, optionalAuthenticate } from '../../middleware/auth.middleware.js';
+import { requireRole } from '../../middleware/role.middleware.js';
 
-const router = express.Router();
+const router = Router();
 
-router.get('/', getWorkers);
-router.get('/:id', getWorkerById);
-router.patch('/:id/availability', updateAvailability);
-router.put('/:id/availability', updateAvailability);
-router.patch('/:id/kyc', updateKyc);
+router.get('/', optionalAuthenticate, getWorkers);
+router.get('/:id', optionalAuthenticate, getWorkerById);
+router.patch('/:id/availability', authenticate, setAvailability);
+router.patch('/:id/kyc', authenticate, requireRole(['ADMIN', 'COOPERATIVE_ADMIN']), updateKycStatus);
+router.get('/:id/earnings', authenticate, getEarnings);
 
 export default router;
-
