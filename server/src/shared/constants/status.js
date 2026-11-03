@@ -1,0 +1,41 @@
+/**
+ * NAKKO Platform - Transaction & Lifecycle Status Constants
+ */
+
+export const SERVICE_STATUS = Object.freeze({
+  CREATED: 'CREATED',
+  SEARCHING: 'SEARCHING',
+  ASSIGNED: 'ASSIGNED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  FAILED: 'FAILED'
+});
+
+export const ASSIGNMENT_STATUS = Object.freeze({
+  PENDING: 'PENDING',
+  OFFERED: 'OFFERED',
+  ACCEPTED: 'ACCEPTED',
+  DECLINED: 'DECLINED',
+  EXPIRED: 'EXPIRED',
+  COMPLETED: 'COMPLETED'
+});
+
+export const TRANSACTION_STATE = Object.freeze({
+  INITIATED: 'INITIATED',
+  ESCROW_HOLD: 'ESCROW_HOLD',
+  MATCHED: 'MATCHED',
+  ACCEPTED: 'ACCEPTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  SETTLED: 'SETTLED',
+  REFUNDED: 'REFUNDED',
+  FAILED: 'FAILED'
+});
+
+export const KYC_STATUS = Object.freeze({
+  PENDING: 'pending',
+  VERIFIED: 'verified',
+  REJECTED: 'rejected'
+});
+
