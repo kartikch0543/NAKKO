@@ -1,0 +1,86 @@
+<!-- ===== RESPONSIVE NAVIGATION ===== -->
+<nav class="nav" role="navigation" aria-label="Main Navigation">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="NAKKO home">
+      <div class="nav-logo-icon">N</div>
+      NAKKO
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <div class="nav-links">
+      <a href="/#how-it-works" class="nav-link">How it works</a>
+      <a href="/#features" class="nav-link">Features</a>
+      <a href="/#for-workers" class="nav-link">For workers</a>
+      <a href="/#about" class="nav-link">About</a>
+    </div>
+
+    <!-- Desktop Actions -->
+    <div class="nav-actions">
+      <!-- Theme Switcher Toggle -->
+      <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle dark/light mode" title="Toggle dark/light mode">
+        <svg class="sun-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="moon-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="/login" class="btn btn-secondary btn-sm">Log in</a>
+      <a href="/login?tab=register" class="btn btn-primary btn-sm">Get started</a>
+    </div>
+
+    <!-- Mobile Hamburger Toggle -->
+    <button type="button" class="nav-toggle-btn" aria-label="Toggle mobile navigation menu">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Navigation Drawer -->
+<div id="mobileNavDrawer" class="mobile-nav-drawer" aria-hidden="true">
+  <div class="mobile-nav-panel">
+    <div class="mobile-nav-header">
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-icon">N</div>
+        NAKKO
+      </a>
+      <div class="flex items-center gap-2">
+        <button type="button" class="theme-toggle-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+          <svg class="sun-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button type="button" id="closeMobileNav" style="font-size:1.5rem; line-height:1; color:var(--text-muted); padding:0.25rem 0.5rem;" aria-label="Close menu">✕</button>
+      </div>
+    </div>
+
+    <div class="mobile-nav-links">
+      <a href="/#how-it-works" class="mobile-nav-link">
+        <span style="font-size:1.2rem;">⚡</span> How it works
+      </a>
+      <a href="/#features" class="mobile-nav-link">
+        <span style="font-size:1.2rem;">✨</span> Features
+      </a>
+      <a href="/#for-workers" class="mobile-nav-link">
+        <span style="font-size:1.2rem;">👷</span> For workers
+      </a>
+      <a href="/#about" class="mobile-nav-link">
+        <span style="font-size:1.2rem;">ℹ️</span> About NAKKO
+      </a>
+      <div style="height:1px; background:var(--border-color); margin:0.75rem 0;"></div>
+      <a href="/dashboard/user" class="mobile-nav-link">
+        <span style="font-size:1.2rem;">🏠</span> Client Dashboard
+      </a>
+      <a href="/dashboard/worker" class="mobile-nav-link">
+        <span style="font-size:1.2rem;">🔧</span> Worker Dashboard
+      </a>
+      <a href="/dashboard/dev" class="mobile-nav-link">
+        <span style="font-size:1.2rem;">⚙️</span> Developer Portal
+      </a>
+    </div>
+
+    <div class="mobile-nav-actions">
+      <a href="/login" class="btn btn-secondary w-full text-center" style="justify-content:center;">Log in</a>
+      <a href="/login?tab=register" class="btn btn-primary w-full text-center" style="justify-content:center;">Get started</a>
+    </div>
+  </div>
+</div>
