@@ -50,8 +50,9 @@ export class CandidateFilter {
       ) {
         const availabilityMetric = calculateAvailabilityScore(worker);
         if (availabilityMetric > 0) {
+          const rawObj = (typeof worker.toObject === 'function') ? worker.toObject() : (worker._doc || worker);
           shortlisted.push({
-            ...worker,
+            ...rawObj,
             availabilityMetric
           });
         }
@@ -63,4 +64,3 @@ export class CandidateFilter {
     return shortlisted.slice(0, limit);
   }
 }
-
