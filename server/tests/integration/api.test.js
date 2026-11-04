@@ -36,6 +36,7 @@ describe('API Integration Endpoints', () => {
     assert.equal(body.status, 'healthy');
     assert.equal(body.innovations.dynamicSearchSpaceReduction, 'ACTIVE');
     assert.equal(body.innovations.atomicStateExecutionProtocol, 'ACTIVE');
+    assert.equal(body.integrations.maps.status, 'ACTIVE');
   });
 
   test('GET /api/services should return gig catalog', async () => {
@@ -140,5 +141,90 @@ describe('API Integration Endpoints', () => {
     const logs = await logsRes.json();
     assert.equal(logs.success, true);
     assert.ok(Array.isArray(logs.data));
+  });
+
+  test('GET /api/maps/config should return map provider and default center', async () => {
+    const res = await fetch(`${baseUrl}/api/maps/config`);
+    assert.equal(res.status, 200);
+    const body = await res.json();
+    assert.equal(body.success, true);
+    assert.ok(body.data.provider);
+    assert.ok(body.data.defaultCenter.lng);
+    assert.ok(body.data.defaultCenter.lat);
+  });
+
+  test('GET /api/maps/geocode should resolve address to coordinates', async () => {
+    const res = await fetch(`${baseUrl}/api/maps/geocode?address=Sector+62+Noida`);
+    assert.equal(res.status, 200);
+    const body = await res.json();
+    assert.equal(body.success, true);
+    assert.equal(body.data.coordinates[0], 77.3600);
+    assert.equal(body.data.coordinates[1], 28.6200);
+  });
+
+  test('POST /api/maps/distance-matrix should calculate transit matrix', async () => {
+    const res = await fetch(`${baseUrl}/api/maps/distance-matrix`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        origin: [77.3910, 28.5355],
+        destinations: [[77.3200, 28.5700], [77.3600, 28.6200]]
+      })
+    });
+    assert.equal(res.status, 200);
+    const body = await res.json();
+    assert.equal(body.success, true);
+    assert.equal(body.data.results.length, 2);
+    assert.ok(body.data.results[0].distanceKm > 0);
+  });
+
+  test('GET /api/maps/route should compute driving waypoints and steps', async () => {
+    const res = await fetch(`${baseUrl}/api/maps/route?originLng=77.33&originLat=28.58&destLng=77.39&destLat=28.53`);
+    assert.equal(res.status, 200);
+    const body = await res.json();
+    assert.equal(body.success, true);
+    assert.ok(body.data.waypoints.length >= 2);
+    assert.ok(body.data.distanceKm > 0);
+  });
+
+  test('GET /api/maps/tracking/:bookingId should return live tracking telemetry', async () => {
+    const bookRes = await fetch(`${baseUrl}/api/bookings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        service: 'Plumbing',
+        address: 'Sector 18, Noida',
+        scheduledTime: 'Today, 5:00 PM'
+      })
+    });
+    const bookData = await bookRes.json();
+    const bookingId = bookData.data.id;
+
+    const trackRes = await fetch(`${baseUrl}/api/maps/tracking/${bookingId}`);
+    assert.equal(trackRes.status, 200);
+    const trackData = await trackRes.json();
+    assert.equal(trackData.success, true);
+    assert.equal(trackData.data.bookingId, bookingId);
+    assert.ok(trackData.data.worker.currentLocation);
+    assert.ok(trackData.data.client.destinationLocation);
+    assert.ok(Array.isArray(trackData.data.waypoints));
+    assert.ok(trackData.data.etaMinutes > 0);
+  });
+
+  test('POST /api/notifications/send should process SMS alerts', async () => {
+    const res = await fetch(`${baseUrl}/api/notifications/send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        to: '+91 98765 43210',
+        message: 'NAKKO: Worker arrived at your location',
+        type: 'STATUS_UPDATE',
+        bookingId: 'NK-0042'
+      })
+    });
+    assert.equal(res.status, 200);
+    const body = await res.json();
+    assert.equal(body.success, true);
+    assert.ok(body.data.messageId);
   });
 });
