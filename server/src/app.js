@@ -15,6 +15,8 @@ import workerRoutes from './modules/workers/worker.routes.js';
 import cooperativeRoutes from './modules/cooperatives/cooperative.routes.js';
 import serviceRequestRoutes from './modules/serviceRequests/serviceRequest.routes.js';
 import paymentRoutes from './modules/payments/payment.routes.js';
+import mapsRoutes from './modules/maps/maps.routes.js';
+import notificationRoutes from './modules/notifications/notification.routes.js';
 import adminRoutes from './modules/admin/admin.routes.js';
 import { WelfareApiAdapter } from './integrations/welfare/welfareApiAdapter.js';
 import { WorkerService } from './modules/workers/worker.service.js';
@@ -59,6 +61,25 @@ app.get('/api/health', (req, res) => {
       dynamicSearchSpaceReduction: 'ACTIVE',
       atomicStateExecutionProtocol: 'ACTIVE'
     },
+    integrations: {
+      maps: {
+        status: 'ACTIVE',
+        googleMapsConfigured: Boolean(env.MAPS.API_KEY),
+        provider: env.MAPS.API_KEY ? 'GOOGLE_MAPS' : 'OPENSTREETMAP_NOMINATIM'
+      },
+      payments: {
+        status: 'ACTIVE',
+        provider: 'RAZORPAY_SANDBOX_ESCROW'
+      },
+      welfare: {
+        status: 'ACTIVE',
+        provider: 'BOCW_E_SHRAM_SIMULATOR'
+      },
+      notifications: {
+        status: 'ACTIVE',
+        provider: 'SMS_GATEWAY_ADAPTER'
+      }
+    },
     timestamp: new Date().toISOString()
   });
 });
@@ -99,6 +120,8 @@ app.use('/api/workers', workerRoutes);
 app.use('/api/cooperatives', cooperativeRoutes);
 app.use('/api/bookings', serviceRequestRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/maps', mapsRoutes);
+app.use('/api/notifications', notificationRoutes);
 app.use('/api/dev', adminRoutes);
 app.use('/api/admin', adminRoutes);
 
@@ -111,4 +134,3 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 export default app;
-

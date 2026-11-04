@@ -31,3 +31,16 @@ export async function getClientProfile(req, res, next) {
   }
 }
 
+export async function updateClientProfile(req, res, next) {
+  try {
+    const clientId = req.user.id;
+    const profile = await ClientService.updateClientProfile(clientId, req.body);
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully',
+      data: profile
+    });
+  } catch (err) {
+    next(err);
+  }
+}
